@@ -18,6 +18,7 @@ using Wpf.Ui.Common.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 using lib.remnant2.analyzer;
 using Clipboard = System.Windows.Clipboard;
+using Remnant2SaveAnalyzer.Logging;
 
 namespace Remnant2SaveAnalyzer.Views.Pages
 {
@@ -71,10 +72,11 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                         //CharacterControl_SelectionChanged(null, null);
                     });
                 };
-                Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
                 BackupsPage.BackupSaveRestored += BackupsPage_BackupSaveRestored;
             }
 
+            _filteredCampaign = [];
+            _filteredAdventure = [];
             if (_save.Dataset == null) return;
 
             Debug.Assert(_save.Dataset != null, "_save.Dataset != null");
@@ -86,8 +88,6 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             FontSizeSlider.Value = Properties.Settings.Default.AnalyzerFontSize;
             FontSizeSlider.ValueChanged += FontSizeSlider_ValueChanged;
 
-            _filteredCampaign = [];
-            _filteredAdventure = [];
             CampaignData.ItemsSource = _filteredCampaign;
             AdventureData.ItemsSource = _filteredAdventure;
 
@@ -167,10 +167,10 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 !Properties.Settings.Default.ExportDecoded &&
                 !Properties.Settings.Default.ExportJson)
             {
-                Logger.Error(Loc.T("Please select at least one export options in profile"));
+                Notifications.Error(Loc.T("Please select at least one export options in profile"));
                 return;
             }
-            
+
             try
             {
                 System.Windows.Forms.FolderBrowserDialog openFolderDialog = new()
@@ -185,14 +185,14 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 }
                 if (openFolderDialog.SelectedPath == Properties.Settings.Default.SaveFolder || openFolderDialog.SelectedPath == _save.SaveFolderPath)
                 {
-                    Logger.Error(Loc.T("export_save_invalid_folder_error"));
+                    Notifications.Error(Loc.T("export_save_invalid_folder_error"));
                     return;
                 }
                 Exporter.Export(openFolderDialog.SelectedPath, _save.SaveFolderPath, Properties.Settings.Default.ExportCopy, Properties.Settings.Default.ExportDecoded, Properties.Settings.Default.ExportJson);
-                Logger.Success(Loc.T($"Exported save files successfully to {openFolderDialog.SelectedPath}"));
+                Notifications.Success(Loc.T($"Exported save files successfully to {openFolderDialog.SelectedPath}"));
             } catch (Exception ex)
             {
-                Logger.Error(Loc.T("Error exporting save files: {errorMessage}", new() { { "errorMessage", ex.Message } }));
+                Notifications.Error(Loc.T("Error exporting save files: {errorMessage}", new() { { "errorMessage", ex.Message } }));
             }
         }
 
@@ -222,15 +222,19 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             }
             if (e.PropertyName == "SaveFolder")
             {
-                _save = new(Properties.Settings.Default.SaveFolder);
-                _save.UpdateCharacters();
-                Dispatcher.Invoke(() => {
-                    ReloadPage();
-                    CheckAdventureTab();
+                Task.Run(() =>
+                {
+                    _save = new(Properties.Settings.Default.SaveFolder);
+                    _save.UpdateCharacters();
+                    Dispatcher.Invoke(() =>
+                    {
+                        ReloadPage();
+                        CheckAdventureTab();
+                    });
                 });
             }
 
-            if(e.PropertyName == "Language")
+            if (e.PropertyName == "Language")
             {
                 Dispatcher.Invoke(() =>
                 {
@@ -239,6 +243,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 });
             }
         }
+        
         private void ListView_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             MouseWheelEventArgs eBack = new(e.MouseDevice, e.Timestamp, e.Delta)
@@ -393,7 +398,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                         }
                         catch (Exception ex)
                         {
-                            Logger.Warn($"Not found properties: {typeNodeTag}_Expand; {ex}");
+                            Notifications.Warn($"Not found properties: {typeNodeTag}_Expand; {ex}");
                         }
                         TreeListClass item = new() { Name = itemType, ChildNode = itemChild[idx] ?? [], Tag = typeNodeTag, IsExpanded = isExpanded };
                         item.Expanded += GameType_CollapsedExpanded;

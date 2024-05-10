@@ -5,12 +5,14 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Wpf.Ui.Common.Interfaces;
 using Remnant2SaveAnalyzer.Helpers;
 using Wpf.Ui.Appearance;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
+using Remnant2SaveAnalyzer.Logging;
 
 namespace Remnant2SaveAnalyzer.Views.Pages
 {
@@ -36,6 +38,16 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 //cmbMissingItemColor.SelectedValuePath = "Tag";
                 cmbMissingItemColor.SelectedIndex = Properties.Settings.Default.MissingItemColor == "Highlight" ? 1 : 0;
                 cmbLootedItemColor.SelectedIndex = Properties.Settings.Default.LootedItemColor == "Dim" ? 1 : 0;
+                cmbLogLevel.SelectedIndex = Properties.Settings.Default.LogLevel switch
+                {
+                    "Verbose" => 0,
+                    "Debug" => 1,
+                    "Information" => 2,
+                    "Warning" => 3,
+                    "Error" => 4,
+                    "Fatal" => 5,
+                    _ => 2
+                };
 
                 foreach (ComboBoxItem item in cmbStartPage.Items)
                 {
@@ -81,7 +93,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
 
                 Properties.Settings.Default.PropertyChanged += Default_PropertyChanged;
             } catch (Exception ex) {
-                Logger.Error($"Error initializing settings page: {ex}");
+                Notifications.Error($"Error initializing settings page: {ex}");
             }
         }
 
@@ -124,7 +136,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             }
             if (e.PropertyName == "EnableOpacity")
             {
-                Logger.Log(Loc.T("Opacity_toggle_notice"));
+                Notifications.Normal(Loc.T("Opacity_toggle_notice"));
             }
             if (e.PropertyName == "Opacity" || e.PropertyName == "OnlyInactive" || e.PropertyName == "Theme")
             {
@@ -203,7 +215,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             string folderName = openFolderDialog.SelectedPath;
             if (folderName.Equals(Properties.Settings.Default.SaveFolder))
             {
-                Logger.Warn(Loc.T("InvalidBackupFolderNoBackupsInSaves"));
+                Notifications.Warn(Loc.T("InvalidBackupFolderNoBackupsInSaves"));
                 return;
             }
             if (folderName.Equals(Properties.Settings.Default.BackupFolder))
@@ -274,7 +286,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             string folderName = openFolderDialog.SelectedPath;
             if (!File.Exists(folderName + "\\Remnant2.exe"))
             {
-                Logger.Warn(Loc.T("InvalidGameFolder"));
+                Notifications.Warn(Loc.T("InvalidGameFolder"));
                 return;
             }
             if (folderName.Equals(Properties.Settings.Default.GameFolder))
@@ -301,7 +313,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             string folderName = openFolderDialog.SelectedPath;
             if (folderName.Equals(Properties.Settings.Default.BackupFolder))
             {
-                Logger.Warn(Loc.T("InvalidSaveFolderNoSavesInBackups"));
+                Notifications.Warn(Loc.T("InvalidSaveFolderNoSavesInBackups"));
                 return;
             }
             if (folderName.Equals(Properties.Settings.Default.BackupFolder))
@@ -310,7 +322,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             }
             if (!RemnantSave.ValidSaveFolder(folderName))
             {
-                Logger.Warn(Loc.T("InvalidSaveFolder"));
+                Notifications.Warn(Loc.T("InvalidSaveFolder"));
                 return;
             }
             txtSaveFolder.Text = folderName;
@@ -360,7 +372,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 Debug.Assert(mainWindow != null, nameof(mainWindow) + " != null");
                 mainWindow.Language = System.Windows.Markup.XmlLanguage.GetLanguage(culture.IetfLanguageTag);
                 Properties.Settings.Default.Language = langs[cmbSwitchLanguage.SelectedIndex].Name;
-                Logger.Success(Loc.T("Language_change_notice_{chosenLanguage}", new() { { "chosenLanguage", culture.DisplayName } }));
+                Notifications.Success(Loc.T("Language_change_notice_{chosenLanguage}", new() { { "chosenLanguage", culture.DisplayName } }));
             }
         }
 
@@ -392,6 +404,11 @@ namespace Remnant2SaveAnalyzer.Views.Pages
         private void CmbLootedItemColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Properties.Settings.Default.LootedItemColor = ((ComboBoxItem)cmbLootedItemColor.SelectedItem).Tag.ToString();
+        }
+
+        private void CmbLogLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Properties.Settings.Default.LogLevel = ((ComboBoxItem)cmbLogLevel.SelectedItem).Tag.ToString();
         }
     }
 }
