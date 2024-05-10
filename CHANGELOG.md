@@ -1,7 +1,10 @@
 # Changelog
 
-## 0.0.9 (unreleased)
+## 0.0.10 (unreleased)
 - Add ability to hide items if they cannot be achived in the current save due to missing prerequisites - work in progress
+
+## 0.0.9 (10 May 2023)
+- Small fix for adventure panel not updating
 
 ## 0.0.8 (10 May 2023)
 - Nothing user facing - reworked internal logging system for easier integrations with the dependencies

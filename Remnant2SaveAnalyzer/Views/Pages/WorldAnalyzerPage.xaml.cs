@@ -70,6 +70,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages
 
                         CharacterControl.SelectedIndex = selectedIndex;
                         //CharacterControl_SelectionChanged(null, null);
+                        CheckAdventureTab();
                     });
                 };
                 BackupsPage.BackupSaveRestored += BackupsPage_BackupSaveRestored;
