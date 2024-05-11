@@ -9,66 +9,66 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace Remnant2SaveAnalyzer.Views.UserControls
+namespace Remnant2SaveAnalyzer.Views.UserControls;
+
+/// <summary>
+/// TextBlockPlus Control Interface
+/// </summary>
+public partial class TextBlockPlus
 {
-    /// <summary>
-    /// TextBlockPlus Control Interface
-    /// </summary>
-    public partial class TextBlockPlus
+    public TextBlockPlus()
     {
-        public TextBlockPlus()
-        {
             InitializeComponent();
         }
-        #region DependencyProperties
-        [Category("Extend Properties")]
-        public string Text
-        {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
-        }
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBlockPlus), new PropertyMetadata(""));
-        [Category("Extend Properties")]
-        public int RollingSpeed
-        {
-            get => (int)GetValue(RollingSpeedProperty);
-            set => SetValue(RollingSpeedProperty, value);
-        }
-        public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(250));
-
-        [Category("Extend Properties")]
-        public int RollbackSpeed
-        {
-            get => (int)GetValue(RollbackSpeedProperty);
-            set => SetValue(RollbackSpeedProperty, value);
-        }
-        public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(1000));
-        #endregion 
-    }
-
-    /// <summary>
-    /// Rolling TextBlock Behavior
-    /// </summary>
-    public sealed class RollingTextBlockBehavior : Behavior<UIElement>
+    #region DependencyProperties
+    [Category("Extend Properties")]
+    public string Text
     {
-        public int RollingSpeed
-        {
-            get => (int)GetValue(RollingSpeedProperty);
-            set => SetValue(RollingSpeedProperty, value);
-        }
-        public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(250));
-        public int RollbackSpeed
-        {
-            get => (int)GetValue(RollbackSpeedProperty);
-            set => SetValue(RollbackSpeedProperty, value);
-        }
-        public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(1000));
+        get => (string)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
+    public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBlockPlus), new PropertyMetadata(""));
+    [Category("Extend Properties")]
+    public int RollingSpeed
+    {
+        get => (int)GetValue(RollingSpeedProperty);
+        set => SetValue(RollingSpeedProperty, value);
+    }
+    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(250));
 
-        private readonly Storyboard _storyBoard = new();
-        private readonly DoubleAnimation _animation = new();
+    [Category("Extend Properties")]
+    public int RollbackSpeed
+    {
+        get => (int)GetValue(RollbackSpeedProperty);
+        set => SetValue(RollbackSpeedProperty, value);
+    }
+    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(1000));
+    #endregion 
+}
 
-        protected override void OnAttached()
-        {
+/// <summary>
+/// Rolling TextBlock Behavior
+/// </summary>
+public sealed class RollingTextBlockBehavior : Behavior<UIElement>
+{
+    public int RollingSpeed
+    {
+        get => (int)GetValue(RollingSpeedProperty);
+        set => SetValue(RollingSpeedProperty, value);
+    }
+    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(250));
+    public int RollbackSpeed
+    {
+        get => (int)GetValue(RollbackSpeedProperty);
+        set => SetValue(RollbackSpeedProperty, value);
+    }
+    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(1000));
+
+    private readonly Storyboard _storyBoard = new();
+    private readonly DoubleAnimation _animation = new();
+
+    protected override void OnAttached()
+    {
             base.OnAttached();
             AssociatedObject.MouseEnter += AssociatedObject_MouseEnter;
             AssociatedObject.MouseLeave += AssociatedObject_MouseLeave;
@@ -84,8 +84,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
             Storyboard.SetTargetProperty(_animation, new PropertyPath("(0)", propertyChain.Select(x => (object)x).ToArray()));
             _storyBoard.Children.Add(_animation);
         }
-        protected override void OnDetaching()
-        {
+    protected override void OnDetaching()
+    {
             base.OnDetaching();
             AssociatedObject.MouseEnter -= AssociatedObject_MouseEnter;
             AssociatedObject.MouseLeave -= AssociatedObject_MouseLeave;
@@ -93,8 +93,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
             AssociatedObject.MouseUp -= AssociatedObject_MouseUp;
             AssociatedObject.PreviewMouseWheel -= AssociatedObject_PreviewMouseWheel;
         }
-        private void AssociatedObject_MouseEnter(object sender, RoutedEventArgs e)
-        {
+    private void AssociatedObject_MouseEnter(object sender, RoutedEventArgs e)
+    {
             if (AssociatedObject is not null)
             {
                 if (AssociatedObject is TextBlock textBlock)
@@ -115,8 +115,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
                 }
             }
         }
-        private void AssociatedObject_MouseLeave(object sender, RoutedEventArgs e)
-        {
+    private void AssociatedObject_MouseLeave(object sender, RoutedEventArgs e)
+    {
             if (AssociatedObject is not null)
             {
                 if (AssociatedObject is TextBlock textBlock)
@@ -137,8 +137,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
                 }
             }
         }
-        private void AssociatedObject_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+    private void AssociatedObject_MouseDown(object sender, MouseButtonEventArgs e)
+    {
             if (AssociatedObject is not null)
             {
                 if (AssociatedObject is TextBlock textBlock && e.LeftButton == MouseButtonState.Pressed)
@@ -165,8 +165,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
                 ui.RaiseEvent(eBack);
             }
         }
-        private void AssociatedObject_MouseUp(object sender, MouseButtonEventArgs e)
-        {
+    private void AssociatedObject_MouseUp(object sender, MouseButtonEventArgs e)
+    {
             if (AssociatedObject is not null)
             {
                 if (AssociatedObject is TextBlock textBlock)
@@ -196,8 +196,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
                 ui.RaiseEvent(eBack);
             }
         }
-        private void AssociatedObject_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
+    private void AssociatedObject_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
             e.Handled = true;
 
             MouseWheelEventArgs eBack = new(e.MouseDevice, e.Timestamp, e.Delta)
@@ -209,8 +209,8 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
             Debug.Assert(ui != null, nameof(ui) + " != null");
             ui.RaiseEvent(eBack);
         }
-        private static DependencyObject? VisualUpwardSearch<T>(DependencyObject source)
-        {
+    private static DependencyObject? VisualUpwardSearch<T>(DependencyObject source)
+    {
             DependencyObject? obj = source;
             while (obj != null && obj.GetType() != typeof(T))
             {
@@ -218,26 +218,25 @@ namespace Remnant2SaveAnalyzer.Views.UserControls
             }
             return obj;
         }
-    }
-    public static class ScrollViewerBehavior
+}
+public static class ScrollViewerBehavior
+{
+    public static readonly DependencyProperty HorizontalOffsetProperty = DependencyProperty.RegisterAttached("HorizontalOffset", typeof(double), typeof(ScrollViewerBehavior), new UIPropertyMetadata(0.0, OnHorizontalOffsetChanged));
+    // ReSharper disable UnusedMember.Global
+    public static void SetHorizontalOffset(FrameworkElement target, double value) 
     {
-        public static readonly DependencyProperty HorizontalOffsetProperty = DependencyProperty.RegisterAttached("HorizontalOffset", typeof(double), typeof(ScrollViewerBehavior), new UIPropertyMetadata(0.0, OnHorizontalOffsetChanged));
-        // ReSharper disable UnusedMember.Global
-        public static void SetHorizontalOffset(FrameworkElement target, double value) 
-        {
             target.SetValue(HorizontalOffsetProperty, value);
         }
-        public static double GetHorizontalOffset(FrameworkElement target)
-        {
+    public static double GetHorizontalOffset(FrameworkElement target)
+    {
             return (double)target.GetValue(HorizontalOffsetProperty);
         }
-        // ReSharper restore UnusedMember.Global
-        private static void OnHorizontalOffsetChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
-        {
+    // ReSharper restore UnusedMember.Global
+    private static void OnHorizontalOffsetChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
+    {
             if (target is ScrollViewer view)
             {
                 view.ScrollToHorizontalOffset((double)e.NewValue);
             }
         }
-    }
 }

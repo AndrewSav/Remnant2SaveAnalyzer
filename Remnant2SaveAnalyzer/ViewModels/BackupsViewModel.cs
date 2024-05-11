@@ -1,16 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Wpf.Ui.Common.Interfaces;
 
-namespace Remnant2SaveAnalyzer.ViewModels
+namespace Remnant2SaveAnalyzer.ViewModels;
+
+public class BackupsViewModel : ObservableObject, INavigationAware
 {
-    public class BackupsViewModel : ObservableObject, INavigationAware
+    public void OnNavigatedTo()
     {
-        public void OnNavigatedTo()
-        {
         }
 
-        public void OnNavigatedFrom()
-        {
+    public void OnNavigatedFrom()
+    {
         }
-    }
 }

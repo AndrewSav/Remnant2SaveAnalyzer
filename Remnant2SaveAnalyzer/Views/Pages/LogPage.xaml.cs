@@ -5,20 +5,20 @@ using Remnant2SaveAnalyzer.Logging;
 using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls;
 
-namespace Remnant2SaveAnalyzer.Views.Pages
-{
-    /// <summary>
-    /// Interaction logic for LogView.xaml
-    /// </summary>
-    public partial class LogPage : INavigableView<ViewModels.LogViewModel>
-    {
-        public ViewModels.LogViewModel ViewModel
-        {
-            get;
-        }
+namespace Remnant2SaveAnalyzer.Views.Pages;
 
-        public LogPage(ViewModels.LogViewModel viewModel)
-        {
+/// <summary>
+/// Interaction logic for LogView.xaml
+/// </summary>
+public partial class LogPage : INavigableView<ViewModels.LogViewModel>
+{
+    public ViewModels.LogViewModel ViewModel
+    {
+        get;
+    }
+
+    public LogPage(ViewModels.LogViewModel viewModel)
+    {
             ViewModel = viewModel;
 
             InitializeComponent();
@@ -29,13 +29,13 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             }
         }
 
-        private void Logger_MessageLogged(object? sender, MessageLoggedEventArgs e)
-        {
+    private void Logger_MessageLogged(object? sender, MessageLoggedEventArgs e)
+    {
             AddMessage(e.Message.Text, e.Message.NotificationType);
         }
 
-        private void AddMessage(string message, NotificationType notificationType)
-        {
+    private void AddMessage(string message, NotificationType notificationType)
+    {
             Dispatcher.Invoke(delegate {
                 InfoBar infoBar = new()
                 {
@@ -69,5 +69,4 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 stackLogs.Children.Insert(0, infoBar);
             });
         }
-    }
 }

@@ -3,12 +3,12 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Remnant2SaveAnalyzer.Helpers
+namespace Remnant2SaveAnalyzer.Helpers;
+
+internal class EnumToBooleanConverter : IValueConverter
 {
-    internal class EnumToBooleanConverter : IValueConverter
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
             if (parameter is not string enumString)
                 throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
 
@@ -21,12 +21,11 @@ namespace Remnant2SaveAnalyzer.Helpers
             return enumValue.Equals(value);
         }
 
-        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
             if (parameter is not string enumString)
                 throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
 
             return Enum.Parse(typeof(Wpf.Ui.Appearance.ThemeType), enumString);
         }
-    }
 }

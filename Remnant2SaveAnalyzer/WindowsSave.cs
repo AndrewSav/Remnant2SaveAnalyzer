@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Remnant2SaveAnalyzer
-{
-    class WindowsSave
-    {
-        public string Container { get; set; }
-        public string Profile { get; set; }
-        public List<string> Worlds { get; set; }
-        public bool Valid { get; }
+namespace Remnant2SaveAnalyzer;
 
-        public WindowsSave(string containerPath)
-        {
+class WindowsSave
+{
+    public string Container { get; set; }
+    public string Profile { get; set; }
+    public List<string> Worlds { get; set; }
+    public bool Valid { get; }
+
+    public WindowsSave(string containerPath)
+    {
             Worlds = [];
             Container = containerPath;
             DirectoryInfo directory = new FileInfo(containerPath).Directory ?? 
@@ -35,5 +35,4 @@ namespace Remnant2SaveAnalyzer
                 offset += 160;
             }
         }
-    }
 }

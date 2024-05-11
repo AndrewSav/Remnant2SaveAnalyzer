@@ -9,18 +9,18 @@ using System.Windows.Controls;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Remnant2SaveAnalyzer.Logging;
 
-namespace Remnant2SaveAnalyzer
+namespace Remnant2SaveAnalyzer;
+
+internal class UpdateCheck
 {
-    internal class UpdateCheck
+    private static readonly string Repo = "AndrewSav/Remnant2SaveAnalyzer";
+    private static readonly HttpClient Client = new();
+    private static DateTime _lastUpdateCheck = DateTime.MinValue;
+
+    public static event EventHandler<NewVersionEventArgs>? NewVersion;
+
+    public static async void CheckForNewVersion()
     {
-        private static readonly string Repo = "AndrewSav/Remnant2SaveAnalyzer";
-        private static readonly HttpClient Client = new();
-        private static DateTime _lastUpdateCheck = DateTime.MinValue;
-
-        public static event EventHandler<NewVersionEventArgs>? NewVersion;
-
-        public static async void CheckForNewVersion()
-        {
             try
             {
                 if (_lastUpdateCheck.AddMinutes(5) > DateTime.Now)
@@ -102,11 +102,10 @@ namespace Remnant2SaveAnalyzer
                 Notifications.Error($"{Loc.T("Error checking for new version")}: {ex.Message}");
             }
         }
-    }
+}
 
-    public class NewVersionEventArgs(Version version, Uri uri) : EventArgs
-    {
-        public Version Version { get; set; } = version;
-        public Uri Uri { get; set; } = uri;
-    }
+public class NewVersionEventArgs(Version version, Uri uri) : EventArgs
+{
+    public Version Version { get; set; } = version;
+    public Uri Uri { get; set; } = uri;
 }

@@ -2,6 +2,7 @@
 
 ## 0.0.10 (unreleased)
 - Add ability to display in italic items that cannot be obtained in the current save, because they depend on something else not avialable in the current save that the character does not currently have
+- Changed to file-scoped namespaces
 
 ## 0.0.9 (10 May 2023)
 - Small fix for adventure panel not updating

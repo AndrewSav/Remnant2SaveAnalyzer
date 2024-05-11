@@ -6,38 +6,38 @@ using System.Threading.Tasks;
 using System.Windows;
 using Wpf.Ui.Mvvm.Contracts;
 
-namespace Remnant2SaveAnalyzer.Services
-{
-    /// <summary>
-    /// Managed host of the application.
-    /// </summary>
-    public class ApplicationHostService(IServiceProvider serviceProvider) : IHostedService
-    {
-        private INavigationWindow? _navigationWindow;
+namespace Remnant2SaveAnalyzer.Services;
 
-        /// <summary>
-        /// Triggered when the application host is ready to start the service.
-        /// </summary>
-        /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
+/// <summary>
+/// Managed host of the application.
+/// </summary>
+public class ApplicationHostService(IServiceProvider serviceProvider) : IHostedService
+{
+    private INavigationWindow? _navigationWindow;
+
+    /// <summary>
+    /// Triggered when the application host is ready to start the service.
+    /// </summary>
+    /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
             return HandleActivationAsync();
         }
 
-        /// <summary>
-        /// Triggered when the application host is performing a graceful shutdown.
-        /// </summary>
-        /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
+    /// <summary>
+    /// Triggered when the application host is performing a graceful shutdown.
+    /// </summary>
+    /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
             return Task.CompletedTask;
         }
 
-        /// <summary>
-        /// Creates main window during activation.
-        /// </summary>
-        private async Task HandleActivationAsync()
-        {
+    /// <summary>
+    /// Creates main window during activation.
+    /// </summary>
+    private async Task HandleActivationAsync()
+    {
             await Task.CompletedTask;
 
             if (!Application.Current.Windows.OfType<Views.Windows.MainWindow>().Any())
@@ -50,5 +50,4 @@ namespace Remnant2SaveAnalyzer.Services
 
             await Task.CompletedTask;
         }
-    }
 }
