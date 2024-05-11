@@ -182,7 +182,7 @@
     <Setting Name="DumpAnalyzerJson" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="LootedItemColor" Type="System.String" Scope="User">
+    <Setting Name="UnobtainableItemColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dim</Value>
     </Setting>
     <Setting Name="ReportParserWarnings" Type="System.Boolean" Scope="User">
@@ -193,6 +193,9 @@
     </Setting>
     <Setting Name="LogLevel" Type="System.String" Scope="User">
       <Value Profile="(Default)">Information</Value>
+    </Setting>
+    <Setting Name="NoPrerequisiteItemStyle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Italic</Value>
     </Setting>
   </Settings>
 </SettingsFile>

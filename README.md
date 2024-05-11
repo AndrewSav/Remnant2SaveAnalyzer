@@ -29,22 +29,21 @@ Most of these issues are unlikely to be fixed, unless someone would like to help
 - Translations might not work as they used, and for the newer content there are none
 - I'm planning on improving this one, if I have the time: "Difficult" items are not working yet: 
   - Golden Ribbon
-  - Gunfire Security Lanyard
-  - Participation Medal
   - Silver Ribbon
+  - Gunfire Security Lanyard
+  - Echo of the Forest
   - CrimsonGuard armor set
-  - Archon
   - Quilted Heart
+  - Participation Medal
   - Ripened Heart
-  - Band of the Fanatic
+  - Void Heart
+  - Profane Heart
   - Bisected Ring
   - Downgraded Ring
-  - Void Heart
-  - Anguish
+  - Band of the Fanatic
   - Crescent Moon
-  - Polygun
-  - Profane Heart
-  - Echo of the Forest
+  - Anguish
+  - Archon
   - Trinity Crossbow
 - [If you are using Norton Antivirus, it may cause weirdness with your game saves and RemnantSaveGuardian](https://github.com/Razzmatazzz/RemnantSaveGuardian/issues/70)
 

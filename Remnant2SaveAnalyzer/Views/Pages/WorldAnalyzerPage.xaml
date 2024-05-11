@@ -77,7 +77,8 @@
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
                     <Style BasedOn="{StaticResource lvItemStyle}" TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{Binding ElementName=analyzer, Path=MissingItemsTextColor, UpdateSourceTrigger=PropertyChanged}" />
+                        <Setter Property="Foreground" Value="{Binding Path=MissingItemTextColor}" />
+                        <Setter Property="FontStyle" Value="{Binding Path=PossibleItemStyle}" />
                     </Style>
                 </Setter.Value>
             </Setter>
@@ -86,7 +87,8 @@
             <Setter Property="ItemContainerStyle">
                 <Setter.Value>
                     <Style BasedOn="{StaticResource lvItemStyle}"  TargetType="ListViewItem">
-                        <Setter Property="Foreground" Value="{Binding Path=LootedItemsTextColor}" />
+                        <Setter Property="Foreground" Value="{Binding Path=PossibleItemTextColor}" />
+                        <Setter Property="FontStyle" Value="{Binding Path=PossibleItemStyle}" />
                     </Style>
                 </Setter.Value>
             </Setter>

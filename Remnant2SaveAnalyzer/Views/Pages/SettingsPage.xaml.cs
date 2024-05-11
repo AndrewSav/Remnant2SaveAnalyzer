@@ -37,7 +37,8 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                 //cmbMissingItemColor.DisplayMemberPath = "Content";
                 //cmbMissingItemColor.SelectedValuePath = "Tag";
                 cmbMissingItemColor.SelectedIndex = Properties.Settings.Default.MissingItemColor == "Highlight" ? 1 : 0;
-                cmbLootedItemColor.SelectedIndex = Properties.Settings.Default.LootedItemColor == "Dim" ? 1 : 0;
+                cmbUnobtainableItemColor.SelectedIndex = Properties.Settings.Default.UnobtainableItemColor == "Dim" ? 1 : 0;
+                cmbNoPrerequisiteItemColor.SelectedIndex = Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" ? 1 : 0;
                 cmbLogLevel.SelectedIndex = Properties.Settings.Default.LogLevel switch
                 {
                     "Verbose" => 0,
@@ -401,14 +402,19 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             Properties.Settings.Default.Wiki = wiki;
         }
 
-        private void CmbLootedItemColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CmbUnobtainableItemColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Properties.Settings.Default.LootedItemColor = ((ComboBoxItem)cmbLootedItemColor.SelectedItem).Tag.ToString();
+            Properties.Settings.Default.UnobtainableItemColor = ((ComboBoxItem)cmbUnobtainableItemColor.SelectedItem).Tag.ToString();
         }
 
         private void CmbLogLevel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Properties.Settings.Default.LogLevel = ((ComboBoxItem)cmbLogLevel.SelectedItem).Tag.ToString();
+        }
+
+        private void СmbNoPrerequisiteItemColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Properties.Settings.Default.NoPrerequisiteItemStyle = ((ComboBoxItem)cmbNoPrerequisiteItemColor.SelectedItem).Tag.ToString();
         }
     }
 }

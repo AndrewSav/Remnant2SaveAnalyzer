@@ -522,25 +522,25 @@
   <data name="RemnantWiki" xml:space="preserve">
     <value>Remnant.wiki</value>
   </data>
-  <data name="chkShowDlc1" xml:space="preserve">
+  <data name="chkShowDlc1_Content" xml:space="preserve">
     <value>Show items from The Awakened King DLC</value>
   </data>
-  <data name="chkShowDlc2" xml:space="preserve">
+  <data name="chkShowDlc2_Content" xml:space="preserve">
     <value>Show items from The Forgotten Kingdom DLC</value>
   </data>
   <data name="Please select at least one export options in profile" xml:space="preserve">
     <value>Please select at least one export options in profile</value>
   </data>
-  <data name="chkShowItemsWithNoPrereqs" xml:space="preserve">
-    <value>Show campaign/adventure items with a missing prerequisite that did not roll in the compaign/adventure</value>
+  <data name="chkShowItemsWithNoPrereqs_Content" xml:space="preserve">
+    <value>Show items with a missing prerequisite that did not roll in the compaign/adventure</value>
   </data>
   <data name="chkDumpAnalyzerJson" xml:space="preserve">
     <value>Dump Analyzer data structures to analyzer.json </value>
   </data>
-  <data name="chkReportPerformance" xml:space="preserve">
+  <data name="chkReportPerformance_Content" xml:space="preserve">
     <value>Log Performance metrics</value>
   </data>
-  <data name="chkReportPlayerInfo" xml:space="preserve">
+  <data name="chkReportPlayerInfo_Content" xml:space="preserve">
     <value>Log Player debug info</value>
   </data>
   <data name="Debug" xml:space="preserve">
@@ -549,8 +549,8 @@
   <data name="debug_note" xml:space="preserve">
     <value>(Enabling these could cause performance degradation and flood the logs)</value>
   </data>
-  <data name="lblLootedItemColor" xml:space="preserve">
-    <value>World analyzer looted world drops / boss rewards color</value>
+  <data name="lblUnobtainableItemColor_Text" xml:space="preserve">
+    <value>World analyzer item color for items unobtainable in the current world/adventure</value>
   </data>
   <data name="looted_note" xml:space="preserve">
     <value>(Not all items can be detected as looted)</value>
@@ -561,10 +561,10 @@
   <data name="chkDebugPrerequisites" xml:space="preserve">
     <value>Debug prerequisites</value>
   </data>
-  <data name="chkReportParserWarnings" xml:space="preserve">
+  <data name="chkReportParserWarnings_Content" xml:space="preserve">
     <value>Report parser warnings</value>
   </data>
-  <data name="lblLogLevel" xml:space="preserve">
+  <data name="lblLogLevel_Text" xml:space="preserve">
     <value>Log level</value>
   </data>
   <data name="Text_Debug" xml:space="preserve">
@@ -584,5 +584,17 @@
   </data>
   <data name="Text_Warning" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="lblUnobtainableItemColor_ToolTip" xml:space="preserve">
+    <value>"Unobtainable" means, that either the character missing a prerequisited for obtaining the item and cannot get the require prerequisite in the current save without re-rolling, or that item, or an alternate reward has already been looted. Looted status cannot be detected for some items</value>
+  </data>
+  <data name="lblNoPrerequisiteItemStyle_Text" xml:space="preserve">
+    <value>Display items with missing prerequisites in this style</value>
+  </data>
+  <data name="lblNoPrerequisiteItemStyle_ToolTip" xml:space="preserve">
+    <value>This does not apply for items, if missing prerequisites can be obtained in the same save without re-rolling</value>
+  </data>
+  <data name="Text_Italic" xml:space="preserve">
+    <value>Italic</value>
   </data>
 </root>

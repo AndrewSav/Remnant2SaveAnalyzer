@@ -369,27 +369,27 @@ namespace Remnant2SaveAnalyzer.locales {
         /// <summary>
         ///   Looks up a localized string similar to Report parser warnings.
         /// </summary>
-        public static string chkReportParserWarnings {
+        public static string chkReportParserWarnings_Content {
             get {
-                return ResourceManager.GetString("chkReportParserWarnings", resourceCulture);
+                return ResourceManager.GetString("chkReportParserWarnings_Content", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Log Performance metrics.
         /// </summary>
-        public static string chkReportPerformance {
+        public static string chkReportPerformance_Content {
             get {
-                return ResourceManager.GetString("chkReportPerformance", resourceCulture);
+                return ResourceManager.GetString("chkReportPerformance_Content", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Log Player debug info.
         /// </summary>
-        public static string chkReportPlayerInfo {
+        public static string chkReportPlayerInfo_Content {
             get {
-                return ResourceManager.GetString("chkReportPlayerInfo", resourceCulture);
+                return ResourceManager.GetString("chkReportPlayerInfo_Content", resourceCulture);
             }
         }
         
@@ -414,27 +414,27 @@ namespace Remnant2SaveAnalyzer.locales {
         /// <summary>
         ///   Looks up a localized string similar to Show items from The Awakened King DLC.
         /// </summary>
-        public static string chkShowDlc1 {
+        public static string chkShowDlc1_Content {
             get {
-                return ResourceManager.GetString("chkShowDlc1", resourceCulture);
+                return ResourceManager.GetString("chkShowDlc1_Content", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Show items from The Forgotten Kingdom DLC.
         /// </summary>
-        public static string chkShowDlc2 {
+        public static string chkShowDlc2_Content {
             get {
-                return ResourceManager.GetString("chkShowDlc2", resourceCulture);
+                return ResourceManager.GetString("chkShowDlc2_Content", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show campaign/adventure items with a missing prerequisite that did not roll in the compaign/adventure.
+        ///   Looks up a localized string similar to Show items with a missing prerequisite that did not roll in the compaign/adventure.
         /// </summary>
-        public static string chkShowItemsWithNoPrereqs {
+        public static string chkShowItemsWithNoPrereqs_Content {
             get {
-                return ResourceManager.GetString("chkShowItemsWithNoPrereqs", resourceCulture);
+                return ResourceManager.GetString("chkShowItemsWithNoPrereqs_Content", resourceCulture);
             }
         }
         
@@ -900,18 +900,9 @@ namespace Remnant2SaveAnalyzer.locales {
         /// <summary>
         ///   Looks up a localized string similar to Log level.
         /// </summary>
-        public static string lblLogLevel {
+        public static string lblLogLevel_Text {
             get {
-                return ResourceManager.GetString("lblLogLevel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to World analyzer looted world drops / boss rewards color.
-        /// </summary>
-        public static string lblLootedItemColor {
-            get {
-                return ResourceManager.GetString("lblLootedItemColor", resourceCulture);
+                return ResourceManager.GetString("lblLogLevel_Text", resourceCulture);
             }
         }
         
@@ -921,6 +912,24 @@ namespace Remnant2SaveAnalyzer.locales {
         public static string lblMissingItemColor_Text {
             get {
                 return ResourceManager.GetString("lblMissingItemColor_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display items with missing prerequisites in this style.
+        /// </summary>
+        public static string lblNoPrerequisiteItemStyle_Text {
+            get {
+                return ResourceManager.GetString("lblNoPrerequisiteItemStyle_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This does not apply for items, if missing prerequisites can be obtained in the same save without re-rolling.
+        /// </summary>
+        public static string lblNoPrerequisiteItemStyle_ToolTip {
+            get {
+                return ResourceManager.GetString("lblNoPrerequisiteItemStyle_ToolTip", resourceCulture);
             }
         }
         
@@ -961,6 +970,24 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to World analyzer item color for items unobtainable in the current world/adventure.
+        /// </summary>
+        public static string lblUnobtainableItemColor_Text {
+            get {
+                return ResourceManager.GetString("lblUnobtainableItemColor_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;Unobtainable&quot; means, that either the character missing a prerequisited for obtaining the item and cannot get the require prerequisite in the current save without re-rolling, or that item, or an alternate reward has already been looted. Looted status cannot be detected for some items.
+        /// </summary>
+        public static string lblUnobtainableItemColor_ToolTip {
+            get {
+                return ResourceManager.GetString("lblUnobtainableItemColor_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select Wiki.
         /// </summary>
         public static string lblWiki_Text {
@@ -988,7 +1015,7 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Log.
+        ///   Looks up a localized string similar to Normal.
         /// </summary>
         public static string Log {
             get {
@@ -1344,6 +1371,15 @@ namespace Remnant2SaveAnalyzer.locales {
         public static string Text_Information {
             get {
                 return ResourceManager.GetString("Text_Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italic.
+        /// </summary>
+        public static string Text_Italic {
+            get {
+                return ResourceManager.GetString("Text_Italic", resourceCulture);
             }
         }
         

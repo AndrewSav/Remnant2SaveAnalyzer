@@ -744,15 +744,17 @@ namespace Remnant2SaveAnalyzer.Views.Pages
                         {
                             items = items.Where(x => !x.IsLooted).ToList();
                         }
+                        if (!Properties.Settings.Default.ShowItemsWithNoPrerequisites)
+                        {
+                            items = items.Where(x => !x.IsPrerequisiteMissing).ToList();
+                        }
 
                         WorldAnalyzerGridData newItem = new(
                             location: l,
                             missingItems: FilterAllDlcItems(items
-                                .Where( x => !x.IsPrerequisiteMissing || Properties.Settings.Default.ShowItemsWithNoPrerequisites)
                                 .Where(x => missingIds.Contains(x.Item["Id"])), 
                                 x=>x.Item).Select(x => new LocalisedLootItem(x, this)).ToList(),
-                            possibleItems: FilterAllDlcItems(items
-                                .Where(x => !x.IsPrerequisiteMissing || Properties.Settings.Default.ShowItemsWithNoPrerequisites), 
+                            possibleItems: FilterAllDlcItems(items, 
                                 x=>x.Item).Select(x => new LocalisedLootItem(x, this)).ToList(),
                             name: Loc.GameT(lg.Name ?? ""),
                             type: Loc.T(Capitalize().Replace(lg.Type, m => m.Value.ToUpper()))
@@ -785,16 +787,30 @@ namespace Remnant2SaveAnalyzer.Views.Pages
             public LocalisedLootItem(LootItem item, WorldAnalyzerPage parent)
             {
                 IsLooted = item.IsLooted;
+                IsPrerequisiteMissing = item.IsPrerequisiteMissing;
                 Item = item.Item;
                 _parent = parent;
             }
 
             public override string Name => Item["Id"] == Loc.GameT(Item["Id"]) ? base.Name : Loc.GameT(Item["Id"]);
 
-            // ReSharper disable once UnusedMember.Global
-            public Brush? LootedItemsTextColor => Properties.Settings.Default.LootedItemColor == "Dim" && IsLooted 
+            // ReSharper disable UnusedMember.Global
+            public Brush? PossibleItemTextColor => 
+                Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
                 ? Brushes.DarkGray 
                 : (Brush)_parent.FindResource("TextFillColorPrimaryBrush");
+
+            public string PossibleItemStyle =>
+                Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
+                    ? "Italic"
+                    : "Normal";
+            
+            public Brush? MissingItemTextColor =>
+                Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
+                    ? Brushes.DarkGray
+                    : _parent.MissingItemsTextColor;
+
+            // ReSharper restore UnusedMember.Global
         }
 
         public class SortCompare : IComparer<Dictionary<string, string>>

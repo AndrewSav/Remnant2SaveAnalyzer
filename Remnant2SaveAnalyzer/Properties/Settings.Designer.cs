@@ -746,12 +746,12 @@ namespace Remnant2SaveAnalyzer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Dim")]
-        public string LootedItemColor {
+        public string UnobtainableItemColor {
             get {
-                return ((string)(this["LootedItemColor"]));
+                return ((string)(this["UnobtainableItemColor"]));
             }
             set {
-                this["LootedItemColor"] = value;
+                this["UnobtainableItemColor"] = value;
             }
         }
         
@@ -788,6 +788,18 @@ namespace Remnant2SaveAnalyzer.Properties {
             }
             set {
                 this["LogLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Italic")]
+        public string NoPrerequisiteItemStyle {
+            get {
+                return ((string)(this["NoPrerequisiteItemStyle"]));
+            }
+            set {
+                this["NoPrerequisiteItemStyle"] = value;
             }
         }
     }
