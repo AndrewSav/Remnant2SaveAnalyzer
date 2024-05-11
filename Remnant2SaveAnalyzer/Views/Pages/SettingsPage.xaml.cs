@@ -12,6 +12,8 @@ using Remnant2SaveAnalyzer.Helpers;
 using Wpf.Ui.Appearance;
 using MessageBox = Wpf.Ui.Controls.MessageBox;
 using Remnant2SaveAnalyzer.Logging;
+using System.Configuration;
+using System.Windows.Input;
 
 namespace Remnant2SaveAnalyzer.Views.Pages;
 
@@ -415,5 +417,13 @@ public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
         Properties.Settings.Default.NoPrerequisiteItemStyle = ((ComboBoxItem)cmbNoPrerequisiteItemColor.SelectedItem).Tag.ToString();
     }
+
+    private void LinkToRepo_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        Clipboard.SetDataObject(SettingsPath);
+    }
+    // ReSharper disable UnusedMember.Global
+    public string SettingsPath => ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+    public string SettingsPathText => Loc.T("Settings path (right click to copy)") + ": " + SettingsPath;
+
 }
-//string debug = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;

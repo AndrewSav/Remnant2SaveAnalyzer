@@ -597,4 +597,7 @@
   <data name="Text_Italic" xml:space="preserve">
     <value>Italic</value>
   </data>
+  <data name="Settings path (right click to copy)" xml:space="preserve">
+    <value>Settings path (right click to copy)</value>
+  </data>
 </root>

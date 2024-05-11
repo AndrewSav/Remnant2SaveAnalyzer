@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.0.10 (unreleased)
+## 0.0.10 (11 May 2023)
 - Add ability to display in italic items that cannot be obtained in the current save, because they depend on something else not avialable in the current save that the character does not currently have
 - Changed to file-scoped namespaces
+- Add setings path tooltip to the settings page about button
 
 ## 0.0.9 (10 May 2023)
 - Small fix for adventure panel not updating

@@ -1312,6 +1312,15 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings path (right click to copy).
+        /// </summary>
+        public static string Settings_path__right_click_to_copy_ {
+            get {
+                return ResourceManager.GetString("Settings path (right click to copy)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Survival.
         /// </summary>
         public static string Survival {

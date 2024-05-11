@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="SettingsPage"
+    Name="settings"
     d:DataContext="{d:DesignInstance local:SettingsPage,
                                      IsDesignTimeCreatable=False}"
     d:DesignHeight="800"
@@ -101,7 +102,7 @@
                 </Grid>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="True">
+        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -341,6 +342,6 @@
 
             </StackPanel>
         </ui:CardExpander>
-        <ui:Anchor Name="LinkToRepo" Margin="0,8,0,8" Content="{lex:Loc AboutRSG}" NavigateUri="https://github.com/AndrewSav/Remnant2SaveAnalyzer" />
+        <ui:Anchor Name="LinkToRepo" Margin="0,8,0,8" Content="{lex:Loc AboutRSG}" NavigateUri="https://github.com/AndrewSav/Remnant2SaveAnalyzer" ToolTip="{Binding ElementName=settings, Path=SettingsPathText}" PreviewMouseRightButtonDown="LinkToRepo_OnPreviewMouseRightButtonDown"/>
     </StackPanel>
 </ui:UiPage>
