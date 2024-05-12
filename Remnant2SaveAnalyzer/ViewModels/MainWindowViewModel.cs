@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.Interfaces;
 
 namespace Remnant2SaveAnalyzer.ViewModels;
 
@@ -14,10 +12,10 @@ public partial class MainWindowViewModel : ObservableObject
     private string _applicationTitle = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<INavigationControl> _navigationItems = [];
+    private ObservableCollection<NavigationViewItem> _navigationItems = [];
 
     [ObservableProperty]
-    private ObservableCollection<INavigationControl> _navigationFooter = [];
+    private ObservableCollection<NavigationViewItem> _navigationFooter = [];
 
     [ObservableProperty]
     private ObservableCollection<MenuItem> _trayMenuItems = [];
@@ -34,41 +32,41 @@ public partial class MainWindowViewModel : ObservableObject
 
         NavigationItems =
         [
-            new NavigationItem
+            new NavigationViewItem
             {
                 Content = Loc.T("Save Backups"),
                 ToolTip = Loc.T("Save Backups"),
-                PageTag = "backups",
-                Icon = SymbolRegular.Database24,
-                PageType = typeof(Views.Pages.BackupsPage)
+                Tag = "backups",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Database24 },
+                TargetPageType = typeof(Views.Pages.BackupsPage)
             },
-            new NavigationItem
+            new NavigationViewItem
             {
                 Content = Loc.T("World Analyzer"),
                 ToolTip = Loc.T("World Analyzer"),
-                PageTag = "world-analyzer",
-                Icon = SymbolRegular.Globe24,
-                PageType = typeof(Views.Pages.WorldAnalyzerPage)
+                Tag = "world-analyzer",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Globe24 },
+                TargetPageType = typeof(Views.Pages.WorldAnalyzerPage)
             }
         ];
 
         NavigationFooter =
         [
-            new NavigationItem
+            new NavigationViewItem
             {
                 Content = Loc.T("Log"),
                 ToolTip = Loc.T("Log"),
-                PageTag = "log",
-                Icon = SymbolRegular.Notebook24,
-                PageType = typeof(Views.Pages.LogPage)
+                Tag = "log",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Notebook24 },
+                TargetPageType = typeof(Views.Pages.LogPage)
             },
-            new NavigationItem
+            new NavigationViewItem
             {
                 Content = Loc.T("Settings"),
                 ToolTip = Loc.T("Settings"),
-                PageTag = "settings",
-                Icon = SymbolRegular.Settings24,
-                PageType = typeof(Views.Pages.SettingsPage)
+                Tag = "settings",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
+                TargetPageType = typeof(Views.Pages.SettingsPage)
             }
         ];
 

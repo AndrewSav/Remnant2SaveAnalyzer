@@ -1,4 +1,4 @@
-﻿<ui:UiPage
+﻿<Page
     x:Class="Remnant2SaveAnalyzer.Views.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -20,8 +20,12 @@
     lex:LocalizeDictionary.DesignCulture="en"
     lex:ResxLocalizationProvider.DefaultAssembly="Remnant2SaveAnalyzer"
     lex:ResxLocalizationProvider.DefaultDictionary="Strings" 
-    Scrollable="True"
     xmlns:properties="clr-namespace:Remnant2SaveAnalyzer.Properties">
+    <Page.Resources>
+        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+    </Page.Resources>
+    <TextBlock Text="SettingsPage"/>
+    <!--
     <ui:UiPage.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </ui:UiPage.Resources>
@@ -344,4 +348,5 @@
         </ui:CardExpander>
         <ui:Anchor Name="LinkToRepo" Margin="0,8,0,8" Content="{lex:Loc AboutRSG}" NavigateUri="https://github.com/AndrewSav/Remnant2SaveAnalyzer" ToolTip="{Binding ElementName=settings, Path=SettingsPathText}" PreviewMouseRightButtonDown="LinkToRepo_OnPreviewMouseRightButtonDown"/>
     </StackPanel>
-</ui:UiPage>
+    -->
+</Page>

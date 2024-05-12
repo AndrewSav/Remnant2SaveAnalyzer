@@ -77,24 +77,24 @@ internal class UpdateCheck
                         TextWrapping = TextWrapping.WrapWithOverflow,
                     };
                     txtBlock.Inlines.Add(hyperLink);
-                    messageBox.Content = txtBlock;
-                    messageBox.ButtonLeftName = Loc.T("Update");
-                    messageBox.ButtonLeftClick += (_, _) => {
-                        UpdateInfoEventArgs args = new()
-                        {
-                            InstalledVersion = localVersion,
-                            CurrentVersion = remoteVersion.ToString(),
-                            DownloadURL = $"https://github.com/{Repo}/releases/download/{remoteVersion}/Remnant2SaveAnalyzer-{remoteVersion}.zip"
-                        };
-                        messageBox.Close();
-                        AutoUpdater.DownloadUpdate(args);
-                        Application.Current.Shutdown();
-                    };
-                    messageBox.ButtonRightName = Loc.T("Cancel");
-                    messageBox.ButtonRightClick += (_, _) => {
-                        messageBox.Close();
-                    };
-                    messageBox.ShowDialog();
+                    //messageBox.Content = txtBlock;
+                    //messageBox.ButtonLeftName = Loc.T("Update");
+                    //messageBox.ButtonLeftClick += (_, _) => {
+                    //    UpdateInfoEventArgs args = new()
+                    //    {
+                    //        InstalledVersion = localVersion,
+                    //        CurrentVersion = remoteVersion.ToString(),
+                    //        DownloadURL = $"https://github.com/{Repo}/releases/download/{remoteVersion}/Remnant2SaveAnalyzer-{remoteVersion}.zip"
+                    //    };
+                    //    messageBox.Close();
+                    //    AutoUpdater.DownloadUpdate(args);
+                    //    Application.Current.Shutdown();
+                    //};
+                    //messageBox.ButtonRightName = Loc.T("Cancel");
+                    //messageBox.ButtonRightClick += (_, _) => {
+                    //    messageBox.Close();
+                    //};
+                    //messageBox.ShowDialog();
                 }
             }
             catch (Exception ex)

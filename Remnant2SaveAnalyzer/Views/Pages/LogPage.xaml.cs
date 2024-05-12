@@ -1,8 +1,6 @@
-﻿//using System.Drawing;
-using System;
+﻿using System;
 using System.Globalization;
 using Remnant2SaveAnalyzer.Logging;
-using Wpf.Ui.Common.Interfaces;
 using Wpf.Ui.Controls;
 
 namespace Remnant2SaveAnalyzer.Views.Pages;
@@ -59,7 +57,7 @@ public partial class LogPage : INavigableView<ViewModels.LogViewModel>
                 MenuItem menuCopyMessage = new()
                 {
                     Header = Loc.T("Copy"),
-                    SymbolIcon = Wpf.Ui.Common.SymbolRegular.Copy24
+                    Icon = new SymbolIcon { Symbol = SymbolRegular.Copy24 }
                 };
                 menuCopyMessage.Click += (_, _) =>
                 {
