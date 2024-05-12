@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:Remnant2SaveAnalyzer.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:properties="clr-namespace:Remnant2SaveAnalyzer.Properties"
     Title="SettingsPage"
     Name="settings"
     d:DataContext="{d:DesignInstance local:SettingsPage,
@@ -19,26 +20,22 @@
     xmlns:lex="http://wpflocalizeextension.codeplex.com"
     lex:LocalizeDictionary.DesignCulture="en"
     lex:ResxLocalizationProvider.DefaultAssembly="Remnant2SaveAnalyzer"
-    lex:ResxLocalizationProvider.DefaultDictionary="Strings" 
-    xmlns:properties="clr-namespace:Remnant2SaveAnalyzer.Properties">
+    lex:ResxLocalizationProvider.DefaultDictionary="Strings">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
     <StackPanel Margin="42,0" DataContext="{Binding Path=(properties:Settings.Default)}">
-        <ui:CardExpander Margin="0,0,0,0" ExpandDirection="Down" IsExpanded="False">
+        <ui:CardExpander Margin="0,0,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon Save24}">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <ui:SymbolIcon FontSize="24" Margin="0,0,8,0" VerticalAlignment="Center" Symbol="Save24" ClipToBounds="True"/>
-                        <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Saves}" />
-                    </StackPanel>
-                    <ui:ToggleSwitch Grid.Column="2" Name="chkAutoBackup" Content="{lex:Loc}" IsChecked="{Binding AutoBackup}" FlowDirection="RightToLeft" Margin="0,0,40,0"/>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Saves}" />
+                    <ui:ToggleSwitch Grid.Column="1" Name="chkAutoBackup" Content="{lex:Loc}" IsChecked="{Binding AutoBackup}" FlowDirection="RightToLeft" Margin="0,0,16,0"/>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
@@ -101,21 +98,17 @@
                 </Grid>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down">
+        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" Icon="{ui:SymbolIcon WindowWrench24}">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <ui:SymbolIcon FontSize="24" Margin="0,0,8,0" VerticalAlignment="Center" Symbol="WindowWrench24" />
-                        <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Preferences}" />
-                    </StackPanel>
-                    <WrapPanel Grid.Column="2">
+                    <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Preferences}" />
+                    <WrapPanel Grid.Column="1">
                         <TextBlock Name="lblSwitchLanguage" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" />
-                        <ComboBox Name="cmbSwitchLanguage" VerticalAlignment="Center" Width="Auto" Margin="10,0,40,0" />
+                        <ComboBox Name="cmbSwitchLanguage" VerticalAlignment="Center" Width="Auto" Margin="16,0,16,0" />
                     </WrapPanel>
                 </Grid>
             </ui:CardExpander.Header>
@@ -169,19 +162,9 @@
                 </WrapPanel>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False">
+        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon WindowWrench24}">
             <ui:CardExpander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <ui:SymbolIcon FontSize="24" Margin="0,0,8,0" VerticalAlignment="Center" Symbol="WindowWrench24" />
-                        <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc World Analyzer}" />
-                    </StackPanel>
-                </Grid>
+                <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc World Analyzer}" />
             </ui:CardExpander.Header>
             <StackPanel>
                 <WrapPanel Margin="0,16,0,0">
@@ -235,50 +218,39 @@
                 </WrapPanel>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardAction Margin="0,8,0,0" Icon="CloudSync24">
-            <Grid Margin="-6,0,40,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="1" Name="btnCheckUpdate" FontSize="20" FontWeight="Medium" Text="{lex:Loc btnCheckUpdate_Content}" ToolTip="{lex:Loc}" VerticalAlignment="Center" />
-                <ui:ToggleSwitch Grid.Column="3" Name="chkAutoCheckUpdate" Content="{lex:Loc}" IsChecked="{Binding AutoCheckUpdate}" VerticalAlignment="Center" FlowDirection="RightToLeft" />
-            </Grid>
-        </ui:CardAction>
-        <ui:Card Margin="0,8,0,0">
+        <ui:CardAction Margin="0,8,0,0" Icon="{ui:SymbolIcon CloudSync24}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                    <ui:SymbolIcon FontSize="24" Margin="0,0,8,0" VerticalAlignment="Center" Symbol="Color24" />
-                    <TextBlock FontSize="20" FontWeight="Medium" Text="{lex:Loc Theme}" />
-                </StackPanel>
-                <WrapPanel Grid.Column="2">
-                    <RadioButton
-                        Name="radThemeLight"
-                        Content="{lex:Loc Light}"
-                        GroupName="themeSelect"/>
-                    <RadioButton
-                        Name="radThemeDark"
-                        Content="{lex:Loc Dark}"
-                        GroupName="themeSelect"/>
-                </WrapPanel>
+                <TextBlock Name="btnCheckUpdate" FontSize="20" FontWeight="Medium" Text="{lex:Loc btnCheckUpdate_Content}" ToolTip="{lex:Loc}" VerticalAlignment="Center" />
+                <ui:ToggleSwitch Grid.Column="1" Name="chkAutoCheckUpdate" Content="{lex:Loc}" IsChecked="{Binding AutoCheckUpdate}" VerticalAlignment="Center" Margin="0,0,16,0" FlowDirection="RightToLeft" />
             </Grid>
-        </ui:Card>
-        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False">
+        </ui:CardAction>
+        <ui:CardControl Margin="0,8,0,0" Icon="{ui:SymbolIcon Color24}">
+            <ui:CardControl.Header>
+                <TextBlock Grid.Column="0" FontSize="20" FontWeight="Medium" Text="{lex:Loc Theme}" />
+            </ui:CardControl.Header>
+            <WrapPanel HorizontalAlignment="Right">
+                <RadioButton
+                    Name="radThemeLight"
+                    Content="{lex:Loc Light}"
+                    GroupName="themeSelect"/>
+                <RadioButton
+                    Name="radThemeDark"
+                    Content="{lex:Loc Dark}"
+                    GroupName="themeSelect"/>
+            </WrapPanel>
+        </ui:CardControl>
+        <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon WrenchScrewdriver24}">
             <ui:CardExpander.Header>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <ui:SymbolIcon FontSize="24" Margin="0,0,8,0" VerticalAlignment="Center" Symbol="WrenchScrewdriver24" />
                         <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Debug}" />
                         <TextBlock Name="debug_note" Text="{lex:Loc}" FontSize="12" FontStyle="Italic" Foreground="{ui:ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
                     </StackPanel>
