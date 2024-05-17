@@ -448,6 +448,24 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show lines that do not have items.
+        /// </summary>
+        public static string chkShowLinesWithNoItems_Content {
+            get {
+                return ResourceManager.GetString("chkShowLinesWithNoItems_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to World Stones and Connections are always shown if enabled.
+        /// </summary>
+        public static string chkShowLinesWithNoItems_ToolTip {
+            get {
+                return ResourceManager.GetString("chkShowLinesWithNoItems_ToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show looted world drops / boss rewards.
         /// </summary>
         public static string chkShowLootedItems_Content {

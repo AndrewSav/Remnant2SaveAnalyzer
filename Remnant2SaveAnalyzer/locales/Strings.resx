@@ -600,4 +600,10 @@
   <data name="Settings path (right click to copy)" xml:space="preserve">
     <value>Settings path (right click to copy)</value>
   </data>
+  <data name="chkShowLinesWithNoItems_Content" xml:space="preserve">
+    <value>Show lines that do not have items</value>
+  </data>
+  <data name="chkShowLinesWithNoItems_ToolTip" xml:space="preserve">
+    <value>World Stones and Connections are always shown if enabled</value>
+  </data>
 </root>

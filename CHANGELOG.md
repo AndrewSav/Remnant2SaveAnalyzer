@@ -1,5 +1,11 @@
 # Changelog
 
+
+## 0.0.11 (17 May 2023)
+- Fixed a few database typos
+- Fixed an issue where loading profile only was not updating profile correctly
+- Added an option to hide empty lines in World Analyzer
+
 ## 0.0.10 (11 May 2023)
 - Add ability to display in italic items that cannot be obtained in the current save, because they depend on something else not avialable in the current save that the character does not currently have
 - Changed to file-scoped namespaces

@@ -61,7 +61,9 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 Dispatcher.Invoke(() =>
                 {
                     int selectedIndex = CharacterControl.SelectedIndex;
-                    ApplyFilter();
+                    Debug.Assert(_save.Dataset != null, "_save.Dataset != null");
+                    CharacterControl.ItemsSource = _save.Dataset.Characters;
+
                     CharacterControl.Items.Refresh();
                     if (selectedIndex >= CharacterControl.Items.Count)
                     {
@@ -70,6 +72,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
 
                     CharacterControl.SelectedIndex = selectedIndex;
                     //CharacterControl_SelectionChanged(null, null);
+                    ApplyFilter();
                     CheckAdventureTab();
                 });
             };
@@ -213,6 +216,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             || e.PropertyName == "ShowDlc2"
             || e.PropertyName == "ShowItemsWithNoPrerequisites"
             || e.PropertyName == "ShowLootedItems"
+            || e.PropertyName == "ShowLinesWithNoItems"
            )
         {
             Dispatcher.Invoke(() =>
@@ -771,11 +775,14 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             }
         }
 
-        result = result.Where(x=>x.Type == "Connections"
-                                 || x.Type == "World Stones"
-                                 || x.MissingItems.Count > 0
-                                 || Properties.Settings.Default.ShowPossibleItems && x.PossibleItems.Count > 0
-        ).ToList();
+        if (!Properties.Settings.Default.ShowLinesWithNoItems)
+        {
+            result = result.Where(x => x.Type == "Connections"
+                                       || x.Type == "World Stones"
+                                       || x.MissingItems.Count > 0
+                                       || Properties.Settings.Default.ShowPossibleItems && x.PossibleItems.Count > 0
+            ).ToList();
+        }
 
         return result;
     }

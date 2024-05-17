@@ -197,5 +197,8 @@
     <Setting Name="NoPrerequisiteItemStyle" Type="System.String" Scope="User">
       <Value Profile="(Default)">Italic</Value>
     </Setting>
+    <Setting Name="ShowLinesWithNoItems" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

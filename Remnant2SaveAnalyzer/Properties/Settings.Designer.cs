@@ -802,5 +802,17 @@ namespace Remnant2SaveAnalyzer.Properties {
                 this["NoPrerequisiteItemStyle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowLinesWithNoItems {
+            get {
+                return ((bool)(this["ShowLinesWithNoItems"]));
+            }
+            set {
+                this["ShowLinesWithNoItems"] = value;
+            }
+        }
     }
 }
