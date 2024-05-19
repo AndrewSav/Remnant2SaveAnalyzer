@@ -410,7 +410,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                     itemNode[itemMode].Add(item);
                 }
 
-                LootItem li = new() { Item = rItem };
+                LootItem li = new() { Properties = rItem };
                 List<TreeListClass>? treeItem = itemChild[idx];
                 Debug.Assert(treeItem != null, nameof(treeItem) + " != null");
                 treeItem.Add(new TreeListClass { Name = li.Name, Notes = rItem["Note"], Tag = rItem });
@@ -550,7 +550,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
     private void SearchItem_Click(object sender, RoutedEventArgs e)
     {
         TreeListClass? treeItem = (TreeListClass)treeMissingItems.SelectedItem;
-        LootItem item = new() { Item = (Dictionary<string, string>)treeItem.Tag };
+        LootItem item = new() { Properties = (Dictionary<string, string>)treeItem.Tag };
         SearchItem(item);
     }
     private static void SearchItem(LootItem item)
@@ -701,7 +701,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                         [
                             new LocalisedLootItem(new()
                             {
-                                Item = new() { { "Name", Loc.GameT("TraitBook") }, { "Id", "Bogus" }, {"Type", "Tome Of Knowledge"} },
+                                Properties = new() { { "Name", Loc.GameT("TraitBook") }, { "Id", "Bogus" }, {"Type", "Tome Of Knowledge"} },
                                 IsLooted = location.TraitBookLooted
                             }, this)
                         ],
@@ -723,7 +723,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                         [
                             new LocalisedLootItem(new()
                             {
-                                Item = new() { { "Name", Loc.GameT("Simulacrum") }, { "Id", "Bogus" }, {"Type", "Simulacrum"} },
+                                Properties = new() { { "Name", Loc.GameT("Simulacrum") }, { "Id", "Bogus" }, {"Type", "Simulacrum"} },
                                 IsLooted = location.SimulacrumLooted,
                             }, this)
                         ],
@@ -742,7 +742,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                     List<LootItem> items = lg.Items;
                     if (!Properties.Settings.Default.ShowCoopItems)
                     {
-                        items = items.Where(x => x.Item.ContainsKey("Coop") && x.Item["Coop"] == "True").ToList();
+                        items = items.Where(x => x.Properties.ContainsKey("Coop") && x.Properties["Coop"] == "True").ToList();
                     }
                     if (!Properties.Settings.Default.ShowLootedItems)
                     {
@@ -756,10 +756,10 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                     WorldAnalyzerGridData newItem = new(
                         location: l,
                         missingItems: FilterAllDlcItems(items
-                                .Where(x => missingIds.Contains(x.Item["Id"])), 
-                            x=>x.Item).Select(x => new LocalisedLootItem(x, this)).ToList(),
+                                .Where(x => missingIds.Contains(x.Id)), 
+                            x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
                         possibleItems: FilterAllDlcItems(items, 
-                            x=>x.Item).Select(x => new LocalisedLootItem(x, this)).ToList(),
+                            x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
                         name: Loc.GameT(lg.Name ?? ""),
                         type: Loc.T(Capitalize().Replace(lg.Type, m => m.Value.ToUpper()))
                     ){Unknown = lg.UnknownMarker};
@@ -795,25 +795,25 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         {
             IsLooted = item.IsLooted;
             IsPrerequisiteMissing = item.IsPrerequisiteMissing;
-            Item = item.Item;
+            Properties = item.Properties;
             _parent = parent;
         }
 
-        public override string Name => Item["Id"] == Loc.GameT(Item["Id"]) ? base.Name : Loc.GameT(Item["Id"]);
+        public override string Name => Id == Loc.GameT(Id) ? base.Name : Loc.GameT(Id);
 
         // ReSharper disable UnusedMember.Global
         public Brush? PossibleItemTextColor => 
-            Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
+            Remnant2SaveAnalyzer.Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Remnant2SaveAnalyzer.Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
                 ? Brushes.DarkGray 
                 : (Brush)_parent.FindResource("TextFillColorPrimaryBrush");
 
         public string PossibleItemStyle =>
-            Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
+            Remnant2SaveAnalyzer.Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
                 ? "Italic"
                 : "Normal";
             
         public Brush? MissingItemTextColor =>
-            Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
+            Remnant2SaveAnalyzer.Properties.Settings.Default.UnobtainableItemColor == "Dim" && IsLooted || Remnant2SaveAnalyzer.Properties.Settings.Default.NoPrerequisiteItemStyle == "Italic" && IsPrerequisiteMissing
                 ? Brushes.DarkGray
                 : _parent.MissingItemsTextColor;
 
@@ -837,8 +837,8 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             {
                 return string.Compare(x["Type"], y["Type"], StringComparison.InvariantCulture);
             }
-            LootItem xi = new() { Item = x };
-            LootItem yi = new() { Item = y };
+            LootItem xi = new() { Properties = x };
+            LootItem yi = new() { Properties = y };
             return string.Compare(xi.Name, yi.Name, StringComparison.InvariantCulture);
         }
     }

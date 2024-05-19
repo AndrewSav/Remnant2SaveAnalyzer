@@ -11,6 +11,8 @@ This is a fork of the excellent [Remnant Save Guardian](https://github.com/Razzm
 - See connections between locations
 - See World Stones
 - See if a Simulacrum is present in a location
+- Items already looted in a save are dimmed in World Analyzer (not all items can be detected as looted)
+- Items that cannot be obtained in a save without re-rolling because of missing prerequisites are shown in italic in World Analyzer
 - Export save as json for geeks only
 
 
@@ -28,23 +30,16 @@ Most of these issues are unlikely to be fixed, unless someone would like to help
 - This program is a bit slower than RSG due to different parsing engine. On SSD the slowdown is noticable but IMO tolerable
 - Translations might not work as they used, and for the newer content there are none
 - I'm planning on improving this one, if I have the time: "Difficult" items are not working yet: 
-  - Golden Ribbon
-  - Silver Ribbon
-  - Gunfire Security Lanyard
   - Echo of the Forest
   - CrimsonGuard armor set
   - Quilted Heart
   - Participation Medal
   - Ripened Heart
-  - Void Heart
   - Profane Heart
-  - Bisected Ring
   - Downgraded Ring
   - Band of the Fanatic
   - Crescent Moon
   - Anguish
-  - Archon
-  - Trinity Crossbow
 - [If you are using Norton Antivirus, it may cause weirdness with your game saves and RemnantSaveGuardian](https://github.com/Razzmatazzz/RemnantSaveGuardian/issues/70)
 
 ## Save Parsing

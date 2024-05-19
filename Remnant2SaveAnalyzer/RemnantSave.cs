@@ -133,13 +133,13 @@ public class RemnantSave
         {
             Formatting = Formatting.Indented,
             ContractResolver = new Exporter.IgnorePropertiesResolver([
-                "Dataset",
+                "ParentDataset",
                 "Parent",
                 "ProfileSaveFile",
                 "ProfileNavigator",
                 "WorldSaveFile",
                 "WorldNavigator",
-                "Character"
+                "ParentCharacter"
             ]),
             NullValueHandling = NullValueHandling.Ignore
         };
@@ -302,7 +302,7 @@ public class RemnantSave
             }
             foreach (LootItem lootItem in lootItems)
             {
-                logger.Information($"  {lootItem.Name} ({lootItem.Item["Subtype"]})");
+                logger.Information($"  {lootItem.Name} ({lootItem.Properties["Subtype"]})");
             }
             logger.Information($"END Quest log, Character {index+1} (save_{character.Index})");
 
