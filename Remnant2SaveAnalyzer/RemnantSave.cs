@@ -337,6 +337,7 @@ public class RemnantSave
                 logger.Information($"  Missing {Utils.Capitalize(m["Type"])}: {m["Name"]}");
             }
             logger.Information($"END Challenges for Character {index+1} (save_{character.Index})");
+            logger.Information("-----------------------------------------------------------------------------");
         }
     }
 
