@@ -1,24 +1,24 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ReactiveUI;
 using Wpf.Ui.Controls;
 
 namespace Remnant2SaveAnalyzer.ViewModels;
 
-public class WorldAnalyzerViewModel : ObservableObject, INavigationAware
+public class WorldAnalyzerViewModel : ReactiveObject, INavigationAware
 {
     private bool _isInitialized;
 
     public void OnNavigatedTo()
     {
-            if (!_isInitialized)
-                InitializeViewModel();
-        }
+        if (!_isInitialized)
+            InitializeViewModel();
+    }
 
     public void OnNavigatedFrom()
     {
-        }
+    }
 
     private void InitializeViewModel()
     {
-            _isInitialized = true;
-        }
+        _isInitialized = true;
+    }
 }

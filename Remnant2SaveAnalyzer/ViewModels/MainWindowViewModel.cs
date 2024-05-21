@@ -1,24 +1,25 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System.Collections.ObjectModel;
 using Wpf.Ui.Controls;
 
 namespace Remnant2SaveAnalyzer.ViewModels;
 
-public partial class MainWindowViewModel : ObservableObject
+public partial class MainWindowViewModel : ReactiveObject
 {
     private bool _isInitialized;
 
-    [ObservableProperty]
-    private string _applicationTitle = string.Empty;
+    [Reactive]
+    public string ApplicationTitle { get; set; } = string.Empty;
 
-    [ObservableProperty]
-    private ObservableCollection<NavigationViewItem> _navigationItems = [];
+    [Reactive]
+    public ObservableCollection<NavigationViewItem> NavigationItems { get; set; } = [];
 
-    [ObservableProperty]
-    private ObservableCollection<NavigationViewItem> _navigationFooter = [];
+    [Reactive]
+    public ObservableCollection<NavigationViewItem> NavigationFooter { get; set; } = [];
 
-    [ObservableProperty]
-    private ObservableCollection<MenuItem> _trayMenuItems = [];
+    [Reactive]
+    public ObservableCollection<MenuItem> TrayMenuItems { get; set; } = [];
 
     public MainWindowViewModel()
     {
