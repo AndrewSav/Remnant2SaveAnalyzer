@@ -243,6 +243,9 @@ public class RemnantSave
             }
             logger.Information($"Campaign difficulty: {character.Save.Campaign.Difficulty}");
             logger.Information($"Campaign play time: {Utils.FormatPlaytime(character.Save.Campaign.Playtime)}");
+            //string respawnPoint = character.Save.Campaign.RespawnPoint ?? "Unknown";
+            //logger.Information($"Campaign respawn point: {respawnPoint}");
+
 
             // Campaign Quest Inventory ------------------------------------------------------------
             logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: campaign");
@@ -265,7 +268,9 @@ public class RemnantSave
                 logger.Information($"Adventure story: {character.Save.Adventure.Zones[0].Story}");
                 logger.Information($"Adventure difficulty: {character.Save.Adventure.Difficulty}");
                 logger.Information($"Adventure play time: {Utils.FormatPlaytime(character.Save.Adventure.Playtime)}");
-                    
+                //respawnPoint = character.Save.Adventure.RespawnPoint ?? "Unknown";
+                //logger.Information($"Adventure respawn point: {respawnPoint}");
+
                 // Adventure Quest Inventory ------------------------------------------------------------
                 logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: adventure");
                 lootItems = character.Save.Adventure.QuestInventory.Select(ItemDb.GetItemByProfileId).Where(x => x != null).OrderBy(x => x!.Name)!;
