@@ -202,10 +202,10 @@ public class RemnantSave
             logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index}), mode: inventory");
 
             IEnumerable<LootItem> lootItems = character.Profile.Inventory
-                .Select(ItemDb.GetItemByProfileId)
+                .Select(x => ItemDb.GetItemByProfileId(x.Name))
                 .Where(x => x != null)!;
 
-            IEnumerable<string> absent = character.Profile.Inventory.Where(x => ItemDb.GetItemByProfileId(x) == null);
+            IEnumerable<string> absent = character.Profile.Inventory.Select(x => x.Name).Where(x => ItemDb.GetItemByProfileId(x) == null);
             foreach (string s in absent)
             {
                 if (!Utils.IsKnownInventoryItem(Utils.GetNameFromProfileId(s)))
@@ -243,8 +243,8 @@ public class RemnantSave
             }
             logger.Information($"Campaign difficulty: {character.Save.Campaign.Difficulty}");
             logger.Information($"Campaign play time: {Utils.FormatPlaytime(character.Save.Campaign.Playtime)}");
-            //string respawnPoint = character.Save.Campaign.RespawnPoint ?? "Unknown";
-            //logger.Information($"Campaign respawn point: {respawnPoint}");
+            string respawnPoint = character.Save.Campaign.RespawnPoint ?? "Unknown";
+            logger.Information($"Campaign respawn point: {respawnPoint}");
 
 
             // Campaign Quest Inventory ------------------------------------------------------------
@@ -268,8 +268,8 @@ public class RemnantSave
                 logger.Information($"Adventure story: {character.Save.Adventure.Zones[0].Story}");
                 logger.Information($"Adventure difficulty: {character.Save.Adventure.Difficulty}");
                 logger.Information($"Adventure play time: {Utils.FormatPlaytime(character.Save.Adventure.Playtime)}");
-                //respawnPoint = character.Save.Adventure.RespawnPoint ?? "Unknown";
-                //logger.Information($"Adventure respawn point: {respawnPoint}");
+                respawnPoint = character.Save.Adventure.RespawnPoint ?? "Unknown";
+                logger.Information($"Adventure respawn point: {respawnPoint}");
 
                 // Adventure Quest Inventory ------------------------------------------------------------
                 logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: adventure");

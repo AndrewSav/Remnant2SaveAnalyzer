@@ -22,6 +22,7 @@ This is a list of things that are possible to add with the new engine, but which
 
 - See items offered in Cass shop
 - Track objectives progression, e.g. kill x bosses
+- Show last respawn point for characters
 
 ## Known issues
 
@@ -30,9 +31,7 @@ Most of these issues are unlikely to be fixed, unless someone would like to help
 - This program is a bit slower than RSG due to different parsing engine. On SSD the slowdown is noticable but IMO tolerable
 - Translations might not work as they used, and for the newer content there are none
 - I'm planning on improving this one, if I have the time: "Difficult" items are not working yet: 
-  - Echo of the Forest
   - Participation Medal
-  - Crescent Moon
   - Anguish
 - [If you are using Norton Antivirus, it may cause weirdness with your game saves and RemnantSaveGuardian](https://github.com/Razzmatazzz/RemnantSaveGuardian/issues/70)
 

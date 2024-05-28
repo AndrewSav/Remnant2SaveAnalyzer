@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.0.12 (28 May 2023)
+- All items except for Anguish should be correctly detected now, if available (Crimson Guard armor set, Quilted Heart, Ripened Heart, Profane Heart, Downgraded Ring, Band of the Fanatic, Trinity Crossbow, Echo of the Forest, Crescent Moon)
 
 ## 0.0.11 (17 May 2023)
 - Fixed a few database typos
