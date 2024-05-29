@@ -30,6 +30,8 @@ public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
     {
         ViewModel = viewModel;
 
+        DataContext = this;
+
         InitializeComponent();
     }
 }

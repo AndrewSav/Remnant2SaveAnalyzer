@@ -19,6 +19,8 @@ public partial class LogPage : INavigableView<ViewModels.LogViewModel>
     {
             ViewModel = viewModel;
 
+            DataContext = this;
+
             InitializeComponent();
             Notifications.MessageLogged += Logger_MessageLogged;
             foreach (LogMessage logMessage in Notifications.Messages)

@@ -41,6 +41,8 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
     {
         ViewModel = viewModel;
 
+        DataContext = this;
+
         InitializeComponent();
     }
 }

@@ -31,6 +31,8 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
     {
         ViewModel = viewModel;
 
+        DataContext = this;
+
         InitializeComponent();
     }
 }
