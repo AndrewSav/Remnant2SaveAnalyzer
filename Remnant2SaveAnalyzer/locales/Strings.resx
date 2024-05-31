@@ -606,4 +606,7 @@
   <data name="chkShowLinesWithNoItems_ToolTip" xml:space="preserve">
     <value>World Stones and Connections are always shown if enabled</value>
   </data>
+  <data name="chkShowNoLocation_Content" xml:space="preserve">
+    <value>Show items not tied to a location</value>
+  </data>
 </root>

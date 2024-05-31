@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.13 (31 May 2023)
+- Added an option to World Analyzer to display items not bound to a particular location
+- Added Anguish detection
+
+Here is how Anguish detection works. If you have not started the Anguish quest and you do not have Ethereal Manor, Anguish will not appear in World Analyzer. If you have not started the Anguish quest, but do have Ethereal Manor in the save, Anguish will appear in Ethereal Manor loot group. From this point on, it will move to the location where the next Dran is.
+
+It will disappear from World Analyzer again, once you get the Dran Dream item. (There is an [issue](https://github.com/AndrewSav/Remnant2SaveAnalyzer/issues/6) to improve this part)
+
 ## 0.0.12 (28 May 2023)
 - All items except for Anguish should be correctly detected now, if available (Crimson Guard armor set, Quilted Heart, Ripened Heart, Profane Heart, Downgraded Ring, Band of the Fanatic, Trinity Crossbow, Echo of the Forest, Crescent Moon)
 
@@ -9,9 +17,9 @@
 - Added an option to hide empty lines in World Analyzer
 
 ## 0.0.10 (11 May 2023)
-- Add ability to display in italic items that cannot be obtained in the current save, because they depend on something else not avialable in the current save that the character does not currently have
+- Add ability to display in italic items that cannot be obtained in the current save, because they depend on something else not available in the current save that the character does not currently have
 - Changed to file-scoped namespaces
-- Add setings path tooltip to the settings page about button
+- Add settings path tooltip to the settings page about button
 
 ## 0.0.9 (10 May 2023)
 - Small fix for adventure panel not updating
@@ -20,7 +28,7 @@
 - Nothing user facing - reworked internal logging system for easier integrations with the dependencies
 
 ## 0.0.7 (9 May 2024)
-- Detect Resolute trait aquisition
+- Detect Resolute trait acquisition
 - Fix rare crashes with backups pane
 
 ## 0.0.6 (8 May 2024)

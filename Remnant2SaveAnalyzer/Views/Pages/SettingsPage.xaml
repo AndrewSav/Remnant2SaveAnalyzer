@@ -231,6 +231,9 @@
                     <ui:ToggleSwitch Name="chkShowRootEarth" IsChecked="{Binding ShowRootEarth}" Content="{lex:Loc}" />
                 </WrapPanel>
                 <WrapPanel Margin="0,16,0,0">
+                    <ui:ToggleSwitch Name="chkShowNoLocation" IsChecked="{Binding ShowNoLocation}" Content="{lex:Loc}" />
+                </WrapPanel>
+                <WrapPanel Margin="0,16,0,0">
                     <ui:ToggleSwitch Name="chkShowConnections" IsChecked="{Binding ShowConnections}" Content="{lex:Loc}" />
                 </WrapPanel>
                 <WrapPanel Margin="0,16,0,0">

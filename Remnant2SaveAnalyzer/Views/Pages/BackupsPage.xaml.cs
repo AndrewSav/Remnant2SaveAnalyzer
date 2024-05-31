@@ -822,7 +822,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
 
     private void RefreshBackups()
     {
-        SortDescription sorting = dataBackups.Items.SortDescriptions.First();
+        SortDescription sorting = dataBackups.Items.SortDescriptions.FirstOrDefault();
         dataBackups.ItemsSource = null;
         dataBackups.ItemsSource = _listBackups;
         dataBackups.Items.SortDescriptions.Add(sorting);

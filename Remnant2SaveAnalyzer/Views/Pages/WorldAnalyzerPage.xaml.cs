@@ -217,6 +217,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             || e.PropertyName == "ShowItemsWithNoPrerequisites"
             || e.PropertyName == "ShowLootedItems"
             || e.PropertyName == "ShowLinesWithNoItems"
+            || e.PropertyName == "ShowNoLocation"
            )
         {
             Dispatcher.Invoke(() =>
@@ -660,12 +661,12 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             if (!Properties.Settings.Default.ShowRootEarth && zone.Name == "Root Earth") continue;
             foreach (Location location in zone.Locations)
             {
-                string l = location.World == "Ward 13" ? Loc.GameT(location.World) : $"{Loc.GameT(location.World)}: {Loc.GameT(location.Name)}";
+                string locationName = location.World == "Ward 13" ? Loc.GameT(location.World) : $"{Loc.GameT(location.World)}: {Loc.GameT(location.Name)}";
 
                 if (Properties.Settings.Default.ShowConnections && location.Connections is { Count: > 0 })
                 {
                     WorldAnalyzerGridData newItem = new(
-                        location: l,
+                        location: locationName,
                         missingItems: [],
                         possibleItems: [],
                         name: string.Join('\n', location.Connections.Select(Loc.GameT)),
@@ -679,7 +680,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 if (Properties.Settings.Default.ShowWorldStones && location.WorldStones is { Count: > 0 })
                 {
                     WorldAnalyzerGridData newItem = new(
-                        location: l,
+                        location: locationName,
                         missingItems: [],
                         possibleItems: [],
                         name: string.Join('\n', location.WorldStones.Select(Loc.GameT)),
@@ -694,7 +695,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 {
                     //List<LocalisedLootItem> ll = new() { new LocalisedLootItem(new() { Item = new() { { "Name", Loc.GameT("TraitBook") } } }) };
                     WorldAnalyzerGridData newItem = new(
-                        location: l,
+                        location: locationName,
                         missingItems: [],
                         possibleItems: 
                                 
@@ -717,7 +718,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 if (Properties.Settings.Default.ShowSimulacrums && location.Simulacrum && (Properties.Settings.Default.ShowLootedItems || !location.SimulacrumLooted))
                 {
                     WorldAnalyzerGridData newItem = new(
-                        location: l,
+                        location: locationName,
                         missingItems: [],
                         possibleItems: 
                         [
@@ -735,45 +736,19 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                         result.Add(newItem);
                     }
                 }
-                    
+
                 foreach (LootGroup lg in location.LootGroups)
                 {
-
-                    List<LootItem> items = lg.Items;
-                    if (!Properties.Settings.Default.ShowCoopItems)
-                    {
-                        items = items.Where(x => x.Properties.ContainsKey("Coop") && x.Properties["Coop"] == "True").ToList();
-                    }
-                    if (!Properties.Settings.Default.ShowLootedItems)
-                    {
-                        items = items.Where(x => !x.IsLooted).ToList();
-                    }
-                    if (!Properties.Settings.Default.ShowItemsWithNoPrerequisites)
-                    {
-                        items = items.Where(x => !x.IsPrerequisiteMissing).ToList();
-                    }
-
-                    WorldAnalyzerGridData newItem = new(
-                        location: l,
-                        missingItems: FilterAllDlcItems(items
-                                .Where(x => missingIds.Contains(x.Id)), 
-                            x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
-                        possibleItems: FilterAllDlcItems(items, 
-                            x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
-                        name: Loc.GameT(lg.Name ?? ""),
-                        type: Loc.T(Capitalize().Replace(lg.Type, m => m.Value.ToUpper()))
-                    ){Unknown = lg.UnknownMarker};
-                    if (newItem.Type == "Dungeon" || newItem.Type == "Location")
-                    {
-                        newItem.Name = Loc.GameT(location.Name);
-                    }
-                    if (EventPassesFilter(newItem))
-                    {
-                        result.Add(newItem);
-                    }
+                    result.AddRange(AddLootGroup(lg, locationName, missingIds));
                 }
             }
         }
+
+        if (Properties.Settings.Default.ShowNoLocation)
+        {
+            result.AddRange(AddLootGroup(world.ProgressionItems!, "Other", missingIds));
+        }
+
 
         if (!Properties.Settings.Default.ShowLinesWithNoItems)
         {
@@ -782,6 +757,45 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                                        || x.MissingItems.Count > 0
                                        || Properties.Settings.Default.ShowPossibleItems && x.PossibleItems.Count > 0
             ).ToList();
+        }
+
+        return result;
+    }
+
+    private List<WorldAnalyzerGridData> AddLootGroup(LootGroup lg, string locationName, List<string> missingIds)
+    {
+        List<WorldAnalyzerGridData> result = new();
+        List<LootItem> items = lg.Items;
+        if (!Properties.Settings.Default.ShowCoopItems)
+        {
+            items = items.Where(x => x.Properties.ContainsKey("Coop") && x.Properties["Coop"] == "True").ToList();
+        }
+        if (!Properties.Settings.Default.ShowLootedItems)
+        {
+            items = items.Where(x => !x.IsLooted).ToList();
+        }
+        if (!Properties.Settings.Default.ShowItemsWithNoPrerequisites)
+        {
+            items = items.Where(x => !x.IsPrerequisiteMissing).ToList();
+        }
+
+        WorldAnalyzerGridData newItem = new(
+            location: locationName,
+            missingItems: FilterAllDlcItems(items
+                    .Where(x => missingIds.Contains(x.Id)), 
+                x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
+            possibleItems: FilterAllDlcItems(items, 
+                x=>x.Properties).Select(x => new LocalisedLootItem(x, this)).ToList(),
+            name: Loc.GameT(lg.Name ?? ""),
+            type: Loc.T(Capitalize().Replace(lg.Type, m => m.Value.ToUpper()))
+        ){Unknown = lg.UnknownMarker};
+        if (newItem.Type == "Dungeon" || newItem.Type == "Location")
+        {
+            newItem.Name = locationName;
+        }
+        if (EventPassesFilter(newItem))
+        {
+            result.Add(newItem);
         }
 
         return result;

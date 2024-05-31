@@ -475,6 +475,15 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show items not tied to a location.
+        /// </summary>
+        public static string chkShowNoLocation_Content {
+            get {
+                return ResourceManager.GetString("chkShowNoLocation_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Possible Items column.
         /// </summary>
         public static string chkShowPossibleItems_Content {
