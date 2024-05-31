@@ -8,10 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:properties="clr-namespace:Remnant2SaveAnalyzer.Properties"
+    xmlns:uitheme="clr-namespace:Wpf.Ui.Appearance;assembly=Wpf.Ui"
+    xmlns:models="clr-namespace:Remnant2SaveAnalyzer.Models"
     Title="SettingsPage"
     Name="settings"
     d:DataContext="{d:DesignInstance local:SettingsPage,
-                                     IsDesignTimeCreatable=False}"
+                                     IsDesignTimeCreatable=True}"
     d:DesignHeight="800"
     d:DesignWidth="800"
     d:Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -25,7 +27,7 @@
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
 
-    <StackPanel Margin="42,0" DataContext="{Binding Path=(properties:Settings.Default)}">
+    <StackPanel Margin="24,0" DataContext="{Binding Source={x:Static properties:Settings.Default}}" MaxWidth="1000">
         <ui:CardExpander Margin="0,0,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon Save24}">
             <ui:CardExpander.Header>
                 <Grid>
@@ -39,63 +41,30 @@
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
-                <WrapPanel>
-                    <ui:NumberBox Name="numBackupMins" Value="{Binding BackupMinutes}" Width="150" ClearButtonEnabled="False"/>
-                    <TextBlock Name="lblBackupMins" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,4,0,0">
-                    <ui:NumberBox Name="numBackupLimit" Value="{Binding BackupLimit}" Width="150" ClearButtonEnabled="False"/>
-                    <TextBlock x:Name="lblBackupLimit" TextWrapping="Wrap" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <Grid Margin="0,4,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="4"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="4"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Button x:Name="btnSaveFolder" Content="{lex:Loc Save Folder}" MinWidth="150" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
-                    <TextBox Name="txtSaveFolder"  TextWrapping="Wrap" Text="{Binding SaveFolder}" IsReadOnly="True" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1" Margin="5,0,5,0" HorizontalContentAlignment="Stretch">
-                        <TextBox.ContextMenu>
-                            <ContextMenu>
-                                <ui:MenuItem Header="{lex:Loc Open Folder}" >
-                                    <MenuItem.Icon>
-                                        <ui:SymbolIcon HorizontalAlignment="Left" Symbol="OpenFolder24" />
-                                    </MenuItem.Icon>
-                                </ui:MenuItem>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
-                    </TextBox>
-                    <Button x:Name="btnBackupFolder" Content="{lex:Loc Backup Folder}" MinWidth="150" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Name="txtBackupFolder" TextWrapping="Wrap" Text="{Binding BackupFolder}" IsReadOnly="True" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Margin="5,0,5,0">
-                        <TextBox.ContextMenu>
-                            <ContextMenu>
-                                <ui:MenuItem Header="{lex:Loc Open Folder}">
-                                    <MenuItem.Icon>
-                                        <ui:SymbolIcon HorizontalAlignment="Left" Symbol="OpenFolder24" />
-                                    </MenuItem.Icon>
-                                </ui:MenuItem>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
-                    </TextBox>
-                    <Button x:Name="btnGameFolder" Content="{lex:Loc Game Folder}" MinWidth="150" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0"/>
-                    <TextBox Name="txtGameFolder" TextWrapping="Wrap" Text="{Binding GameFolder}" IsReadOnly="True" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Margin="5,0,5,0">
-                        <TextBox.ContextMenu>
-                            <ContextMenu>
-                                <ui:MenuItem Header="{lex:Loc Open Folder}">
-                                    <MenuItem.Icon>
-                                        <ui:SymbolIcon HorizontalAlignment="Left" Symbol="OpenFolder24" />
-                                    </MenuItem.Icon>
-                                </ui:MenuItem>
-                            </ContextMenu>
-                        </TextBox.ContextMenu>
-                    </TextBox>
-                </Grid>
+                <ui:CardControl Header="{lex:Loc lblBackupMins_Text}" ToolTip="{lex:Loc lblBackupMins_ToolTip}">
+                    <ui:NumberBox Name="numBackupMins" Value="{Binding BackupMinutes, Mode=TwoWay}" Width="150" ClearButtonEnabled="False"/>
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblBackupLimit_Text}" ToolTip="{lex:Loc lblBackupLimit_ToolTip}">
+                    <ui:NumberBox Name="numBackupLimit" Value="{Binding BackupLimit, Mode=TwoWay}" Width="150" Maximum="100" ClearButtonEnabled="False"/>
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc Save Folder}">
+                    <WrapPanel>
+                        <TextBlock Text="{Binding SaveFolder}"  VerticalAlignment="Center" Margin="0,0,20,0"/>
+                        <Button Content="Select" />
+                    </WrapPanel>
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc Backup Folder}">
+                    <WrapPanel>
+                        <TextBlock Text="path/to/backups"  VerticalAlignment="Center" Margin="0,0,20,0"/>
+                        <Button Content="Select" />
+                    </WrapPanel>
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc Game Folder}">
+                    <WrapPanel>
+                        <TextBlock Text="{Binding GameFolder}"  VerticalAlignment="Center" Margin="0,0,20,0"/>
+                        <Button Content="Select" />
+                    </WrapPanel>
+                </ui:CardControl>
             </StackPanel>
         </ui:CardExpander>
         <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" Icon="{ui:SymbolIcon WindowWrench24}">
@@ -108,58 +77,31 @@
                     <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Preferences}" />
                     <WrapPanel Grid.Column="1">
                         <TextBlock Name="lblSwitchLanguage" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" />
-                        <ComboBox Name="cmbSwitchLanguage" VerticalAlignment="Center" Width="Auto" Margin="16,0,16,0" />
+                        <ComboBox Name="cmbSwitchLanguage" 
+                                  ItemsSource="{Binding ViewModel.Languages, RelativeSource={RelativeSource AncestorType=local:SettingsPage} }" Width="Auto" Margin="16,0,16,0" 
+                                  DisplayMemberPath="NativeName" SelectedValue="Language"/>
                     </WrapPanel>
                 </Grid>
             </ui:CardExpander.Header>
             <StackPanel>
-                <WrapPanel>
-                    <ComboBox Name="cmbStartPage" VerticalAlignment="Top" Width="150">
-                        <ComboBoxItem Content="{lex:Loc Save Backups}" Tag="backups"/>
-                        <ComboBoxItem Content="{lex:Loc World Analyzer}" Tag="world-analyzer"/>
-                    </ComboBox>
-                    <TextBlock Name="lblStartPage" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,8,0,0">
-                    <ComboBox Name="cmbWiki" VerticalAlignment="Top" Width="150">
-                        <ComboBoxItem Content="{lex:Loc Fextralife}" Tag="fextrawiki"/>
-                        <ComboBoxItem Content="{lex:Loc RemnantWiki}" Tag="remwiki"/>
-                    </ComboBox>
-                    <TextBlock Name="lblWiki" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,8,0,0">
-                    <ComboBox Name="cmbMissingItemColor" VerticalAlignment="Top" Width="150">
-                        <ComboBox.Items>
-                            <ComboBoxItem Content="{lex:Loc Text_Normal}" Tag="Normal"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Highlight}" Tag="Highlight"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                    <TextBlock Name="lblMissingItemColor" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,8,0,0">
-                    <ComboBox Name="cmbUnobtainableItemColor" VerticalAlignment="Top" Width="150">
-                        <ComboBox.Items>
-                            <ComboBoxItem Content="{lex:Loc Text_Normal}" Tag="Normal"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Dim}" Tag="Dim"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                    <TextBlock Name="lblUnobtainableItemColor" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,8,0,0">
-                    <ComboBox Name="cmbNoPrerequisiteItemColor" VerticalAlignment="Top" Width="150">
-                        <ComboBox.Items>
-                            <ComboBoxItem Content="{lex:Loc Text_Normal}" Tag="Normal"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Italic}" Tag="Italic"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                    <TextBlock Name="lblNoPrerequisiteItemStyle" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkCreateLogFile" IsChecked="{Binding CreateLogFile}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkAutoHideNaviAndTitleBar" IsChecked="{Binding AutoHideNaviAndTitleBar}" Content="{lex:Loc}" />
-                </WrapPanel>
+                <ui:CardControl Header="{lex:Loc lblStartPage_Text}" ToolTip="{lex:Loc lblStartPage_ToolTip}">
+                    <ComboBox SelectedValue="{Binding StartPage, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.StartPages, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblWiki_Text}" ToolTip="{lex:Loc lblWiki_ToolTip}">
+                    <ComboBox SelectedValue="{Binding Wiki, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.Wikis, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblMissingItemColor_Text}" ToolTip="{lex:Loc lblMissingItemColor_ToolTip}">
+                    <ComboBox Name="cmbMissingItemColor" SelectedValue="{Binding MissingItemColor, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.MissingItemColors, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" Width="150" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblUnobtainableItemColor_Text}" ToolTip="{lex:Loc lblUnobtainableItemColor_Tooltip}">
+                    <ComboBox Name="cmbUnobtainableItemColor" SelectedValue="{Binding UnobtainableItemColor}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.UnobtainableItemColors, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" Width="150" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblNoPrerequisiteItemStyle_Text}" ToolTip="{lex:Loc lblNoPrerequisiteItemStyle_Tooltip}">
+                    <ComboBox Name="cmbNoPrerequisiteItemColor" Width="150" SelectedValue="{Binding NoPrerequisiteItemStyle}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.NoPrerequisiteItemColors, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkAutoHideNaviAndTitleBar_Content}">
+                    <ui:ToggleSwitch Name="chkAutoHideNaviAndTitleBar" IsChecked="{Binding AutoHideNaviAndTitleBar}" />
+                </ui:CardControl>
             </StackPanel>
         </ui:CardExpander>
         <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon WindowWrench24}">
@@ -167,58 +109,18 @@
                 <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc World Analyzer}" />
             </ui:CardExpander.Header>
             <StackPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowPossibleItems" Content="{lex:Loc}" IsChecked="{Binding ShowPossibleItems}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowCoopItems" Content="{lex:Loc}" IsChecked="{Binding ShowCoopItems}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowLootedItems" Content="{lex:Loc}" IsChecked="{Binding ShowLootedItems}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                    <TextBlock Name="looted_note2" Text="{lex:Loc looted_note}" FontSize="12" FontStyle="Italic" Foreground="{ui:ThemeResource SystemFillColorSuccessBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowItemsWithNoPrereqs" IsChecked="{Binding ShowItemsWithNoPrerequisites}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowWard13" IsChecked="{Binding ShowWard13}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowLabyrinth" IsChecked="{Binding ShowShowLabyrinth}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowRootEarth" IsChecked="{Binding ShowRootEarth}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowConnections" IsChecked="{Binding ShowConnections}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowWorldStones" IsChecked="{Binding ShowWorldStones}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowTomes" IsChecked="{Binding ShowTomes}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowSimulacrums" IsChecked="{Binding ShowSimulacrums}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowDlc1" IsChecked="{Binding ShowDlc1}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkShowDlc2" IsChecked="{Binding ShowDlc2}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkExportCopy" IsChecked="{Binding ExportCopy}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkExportDecoded" IsChecked="{Binding ExportDecoded}" Content="{lex:Loc}" />
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkExportJson" IsChecked="{Binding ExportJson}" Content="{lex:Loc}" />
-                </WrapPanel>
+                <ui:CardControl Header="{lex:Loc chkExportCopy_Content}">
+                    <ui:ToggleSwitch Name="chkExportCopy" IsChecked="{Binding ExportCopy}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkExportDecoded_Content}">
+                    <ui:ToggleSwitch Name="chkExportDecoded" IsChecked="{Binding ExportDecoded}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkExportJson_Content}">
+                    <ui:ToggleSwitch Name="chkExportJson" IsChecked="{Binding ExportJson}" />
+                </ui:CardControl>
             </StackPanel>
         </ui:CardExpander>
-        <ui:CardAction Margin="0,8,0,0" Icon="{ui:SymbolIcon CloudSync24}">
+        <ui:CardAction Margin="0,8,0,0" Icon="{ui:SymbolIcon CloudSync24}" Command="{Binding ViewModel.CheckUpdateCommand, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -228,16 +130,20 @@
                 <ui:ToggleSwitch Grid.Column="1" Name="chkAutoCheckUpdate" Content="{lex:Loc}" IsChecked="{Binding AutoCheckUpdate}" VerticalAlignment="Center" Margin="0,0,16,0" FlowDirection="RightToLeft" />
             </Grid>
         </ui:CardAction>
-        <ui:CardControl Margin="0,8,0,0" Icon="{ui:SymbolIcon Color24}">
-            <ui:CardControl.Header>
-                <TextBlock Grid.Column="0" FontSize="20" FontWeight="Medium" Text="{lex:Loc Theme}" />
-            </ui:CardControl.Header>
+        <ui:CardControl Margin="0,8,0,0" 
+                        Icon="{ui:SymbolIcon Color24}" 
+                        Header="{lex:Loc Theme}"
+                        DataContext="{Binding RelativeSource={RelativeSource AncestorType=local:SettingsPage}}">
             <WrapPanel HorizontalAlignment="Right">
-                <RadioButton
+                <RadioButton 
+                    Command="{Binding ViewModel.ChangeThemeCommand}"
+                    CommandParameter="{x:Static uitheme:ApplicationTheme.Light}"
                     Name="radThemeLight"
                     Content="{lex:Loc Light}"
-                    GroupName="themeSelect"/>
-                <RadioButton
+                    GroupName="themeSelect" IsChecked="True"/>
+                <RadioButton 
+                    Command="{Binding ViewModel.ChangeThemeCommand}"
+                    CommandParameter="{x:Static uitheme:ApplicationTheme.Dark}"
                     Name="radThemeDark"
                     Content="{lex:Loc Dark}"
                     GroupName="themeSelect"/>
@@ -245,49 +151,35 @@
         </ui:CardControl>
         <ui:CardExpander Margin="0,8,0,0" ExpandDirection="Down" IsExpanded="False" Icon="{ui:SymbolIcon WrenchScrewdriver24}">
             <ui:CardExpander.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Debug}" />
-                        <TextBlock Name="debug_note" Text="{lex:Loc}" FontSize="12" FontStyle="Italic" Foreground="{ui:ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Grid>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Medium" Text="{lex:Loc Debug}" />
+                    <TextBlock Name="debug_note" Text="{lex:Loc}" FontSize="12" FontStyle="Italic" Foreground="{ui:ThemeResource SystemFillColorCautionBrush}" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
             </ui:CardExpander.Header>
             <StackPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkReportPerformance" Content="{lex:Loc}" IsChecked="{Binding ReportPerformance}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkReportPlayerInfo" Content="{lex:Loc}" IsChecked="{Binding ReportPlayerInfo}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkDumpAnalyzerJson" Content="{lex:Loc}" IsChecked="{Binding DumpAnalyzerJson}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkReportParserWarnings" Content="{lex:Loc}" IsChecked="{Binding ReportParserWarnings}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,16,0,0">
-                    <ui:ToggleSwitch Name="chkDebugPrerequisites" Content="{lex:Loc}" IsChecked="{Binding DebugPrerequisites}" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                </WrapPanel>
-                <WrapPanel Margin="0,8,0,0">
-                    <ComboBox Name="cmbLogLevel" VerticalAlignment="Top" Width="150">
-                        <ComboBox.Items>
-                            <ComboBoxItem Content="{lex:Loc Text_Verbose}" Tag="Verbose"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Debug}" Tag="Debug"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Information}" Tag="Information"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Warning}" Tag="Warning"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Error}" Tag="Error"/>
-                            <ComboBoxItem Content="{lex:Loc Text_Fatal}" Tag="Fatal"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                    <TextBlock Name="lblLogLevel" Text="{lex:Loc}" ToolTip="{lex:Loc}" VerticalAlignment="Center" Margin="20,0,0,0"/>
-                </WrapPanel>
-
+                <ui:CardControl Header="{lex:Loc chkCreateLogFile_Content}">
+                    <ui:ToggleSwitch Name="chkCreateLogFile" IsChecked="{Binding CreateLogFile}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkReportPerformance_Content}">
+                    <ui:ToggleSwitch Name="chkReportPerformance" IsChecked="{Binding ReportPerformance}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkReportPlayerInfo_Content}">
+                    <ui:ToggleSwitch Name="chkReportPlayerInfo" IsChecked="{Binding ReportPlayerInfo}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkDumpAnalyzerJson_Content}">
+                    <ui:ToggleSwitch Name="chkDumpAnalyzerJson" IsChecked="{Binding DumpAnalyzerJson}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkReportParserWarnings_Content}">
+                    <ui:ToggleSwitch Name="chkReportParserWarnings" IsChecked="{Binding ReportParserWarnings}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc chkDebugPrerequisites}">
+                    <ui:ToggleSwitch Name="chkDebugPrerequisites" IsChecked="{Binding DebugPrerequisites}" />
+                </ui:CardControl>
+                <ui:CardControl Header="{lex:Loc lblLogLevel_Text}" ToolTip="{lex:Loc lblLogLevel_ToolTip}">
+                    <ComboBox Name="cmbLogLevel" SelectedValue="{Binding LogLevel}" DisplayMemberPath="Name" SelectedValuePath="Tag" ItemsSource="{Binding ViewModel.LogLevels, RelativeSource={RelativeSource AncestorType=local:SettingsPage}}" Width="150" />
+                </ui:CardControl>
             </StackPanel>
         </ui:CardExpander>
-        <ui:Anchor Name="LinkToRepo" Margin="0,8,0,8" Content="{lex:Loc AboutRSG}" NavigateUri="https://github.com/AndrewSav/Remnant2SaveAnalyzer" ToolTip="{Binding ElementName=settings, Path=SettingsPathText}"/>
+        <ui:Anchor Name="LinkToRepo" Margin="0,8,0,8" Content="{lex:Loc AboutRSG}" NavigateUri="https://github.com/AndrewSav/Remnant2SaveAnalyzer"/>
     </StackPanel>
 </Page>
