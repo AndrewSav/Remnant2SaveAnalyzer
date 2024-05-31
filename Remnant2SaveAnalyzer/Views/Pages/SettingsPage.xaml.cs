@@ -21,10 +21,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages;
 /// </summary>
 public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
 {
-    public ViewModels.SettingsViewModel ViewModel
-    {
-        get;
-    }
+    public ViewModels.SettingsViewModel ViewModel { get; }
 
     public SettingsPage(ViewModels.SettingsViewModel viewModel)
     {

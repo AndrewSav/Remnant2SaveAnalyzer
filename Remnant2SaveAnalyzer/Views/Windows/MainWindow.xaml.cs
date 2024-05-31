@@ -24,10 +24,7 @@ namespace Remnant2SaveAnalyzer.Views.Windows;
 /// </summary>
 public partial class MainWindow : INavigationWindow
 {
-    public MainWindowViewModel ViewModel
-    {
-        get;
-    }
+    public MainWindowViewModel ViewModel { get; }
 
     public MainWindow(MainWindowViewModel viewModel, IPageService pageService, INavigationService navigationService)
     {

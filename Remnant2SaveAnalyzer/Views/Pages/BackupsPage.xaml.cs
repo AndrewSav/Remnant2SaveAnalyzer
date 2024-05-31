@@ -22,10 +22,7 @@ namespace Remnant2SaveAnalyzer.Views.Pages;
 /// </summary>
 public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
 {
-    public ViewModels.BackupsViewModel ViewModel
-    {
-        get;
-    }
+    public ViewModels.BackupsViewModel ViewModel { get; }
 
     public BackupsPage(ViewModels.BackupsViewModel viewModel)
     {
