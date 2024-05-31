@@ -30,9 +30,6 @@ Most of these issues are unlikely to be fixed, unless someone would like to help
 
 - This program is a bit slower than RSG due to different parsing engine. On SSD the slowdown is noticable but IMO tolerable
 - Translations might not work as they used, and for the newer content there are none
-- I'm planning on improving this one, if I have the time: "Difficult" items are not working yet: 
-  - Participation Medal
-  - Anguish
 - [If you are using Norton Antivirus, it may cause weirdness with your game saves and RemnantSaveGuardian](https://github.com/Razzmatazzz/RemnantSaveGuardian/issues/70)
 
 ## Save Parsing
