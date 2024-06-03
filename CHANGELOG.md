@@ -1,15 +1,18 @@
 # Changelog
 
+## v0.0.17 (4 June 2024)
+- Fixed Necklace of Flowing Life crash
+
 ## 0.0.16 (4 June 2023)
-- Add the  Nimue/Dran/Huntress/Root Walker "Dream" consumables for detection of "craftable" items
+- Added the  Nimue/Dran/Huntress/Root Walker "Dream" consumables for detection of "craftable" items
 
 ## 0.0.15 (4 June 2023)
-- Add a section to items not tied to a location with "craftable" items that the character already has materials for in the inventory
+- Added a section to items not tied to a location with "craftable" items that the character already has materials for in the inventory
 
 ## 0.0.14 (4 June 2023)
 - Performance improvements
-- Do not display warning about unknown Dran Dream item
-- Fix co-op option completely broken in World Analyser
+- Stopped displaying warning about unknown Dran Dream item
+- Fixed co-op option completely broken in World Analyser
 
 ## 0.0.13 (31 May 2023)
 - Added an option to World Analyzer to display items not bound to a particular location
