@@ -746,7 +746,10 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
 
         if (Properties.Settings.Default.ShowNoLocation)
         {
-            result.AddRange(AddLootGroup(world.ProgressionItems!, "Other", missingIds));
+            foreach (LootGroup lootGroup in world.AdditionalItems)
+            {
+                result.AddRange(AddLootGroup(lootGroup, "Other", missingIds));
+            }
         }
 
 
@@ -764,7 +767,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
 
     private List<WorldAnalyzerGridData> AddLootGroup(LootGroup lg, string locationName, List<string> missingIds)
     {
-        List<WorldAnalyzerGridData> result = new();
+        List<WorldAnalyzerGridData> result = [];
         List<LootItem> items = lg.Items;
         if (!Properties.Settings.Default.ShowCoopItems)
         {

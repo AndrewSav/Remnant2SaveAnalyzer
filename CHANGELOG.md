@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.15 (4 June 2023)
+- Add a section to items not tied to a location with "craftable" items that the character already has materials for in the inventory
+
 ## 0.0.14 (4 June 2023)
 - Performance improvements
 - Do not display warning about unknown Dran Dream item
