@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.14 (4 June 2023)
+- Performance improvements
+- Do not display warning about unknown Dran Dream item
+- Fix co-op option completely broken in World Analyser
+
 ## 0.0.13 (31 May 2023)
 - Added an option to World Analyzer to display items not bound to a particular location
 - Added Anguish detection

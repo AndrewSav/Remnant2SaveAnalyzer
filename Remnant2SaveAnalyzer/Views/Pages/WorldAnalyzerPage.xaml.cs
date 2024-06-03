@@ -379,7 +379,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             List<Dictionary<string, string>> missingItems = _save.Dataset.Characters[CharacterControl.SelectedIndex].Profile.MissingItems;
             if (!Properties.Settings.Default.ShowCoopItems)
             {
-                missingItems = missingItems.Where(x => x.ContainsKey("Coop") && x["Coop"] == "True").ToList();
+                missingItems = missingItems.Where(x => !x.ContainsKey("Coop") || x["Coop"] != "True").ToList();
             }
                 
             missingItems = FilterAllDlcItems(missingItems, x=>x);
@@ -768,7 +768,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         List<LootItem> items = lg.Items;
         if (!Properties.Settings.Default.ShowCoopItems)
         {
-            items = items.Where(x => x.Properties.ContainsKey("Coop") && x.Properties["Coop"] == "True").ToList();
+            items = items.Where(x => !x.Properties.ContainsKey("Coop") || x.Properties["Coop"] != "True").ToList();
         }
         if (!Properties.Settings.Default.ShowLootedItems)
         {
