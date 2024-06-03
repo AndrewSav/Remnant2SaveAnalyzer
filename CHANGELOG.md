@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.16 (4 June 2023)
+- Add the  Nimue/Dran/Huntress/Root Walker "Dream" consumables for detection of "craftable" items
+
 ## 0.0.15 (4 June 2023)
 - Add a section to items not tied to a location with "craftable" items that the character already has materials for in the inventory
 
