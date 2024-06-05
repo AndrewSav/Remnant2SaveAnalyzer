@@ -244,6 +244,7 @@ public class RemnantSave
             logger.Information($"Campaign difficulty: {character.Save.Campaign.Difficulty}");
             logger.Information($"Campaign play time: {Utils.FormatPlaytime(character.Save.Campaign.Playtime)}");
             string respawnPoint = character.Save.Campaign.RespawnPoint ?? "Unknown";
+            //string respawnPoint = character.Save.Campaign.RespawnPoint == null ? "Unknown" : character.Save.Campaign.RespawnPoint.ToString();
             logger.Information($"Campaign respawn point: {respawnPoint}");
 
 
@@ -269,6 +270,7 @@ public class RemnantSave
                 logger.Information($"Adventure difficulty: {character.Save.Adventure.Difficulty}");
                 logger.Information($"Adventure play time: {Utils.FormatPlaytime(character.Save.Adventure.Playtime)}");
                 respawnPoint = character.Save.Adventure.RespawnPoint ?? "Unknown";
+                //string respawnPoint = character.Save.Adventure.RespawnPoint == null ? "Unknown" : character.Save.Adventure.RespawnPoint.ToString();
                 logger.Information($"Adventure respawn point: {respawnPoint}");
 
                 // Adventure Quest Inventory ------------------------------------------------------------
