@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using lib.remnant2.analyzer;
 using Clipboard = System.Windows.Clipboard;
 using Remnant2SaveAnalyzer.Logging;
+using lib.remnant2.analyzer.Enums;
 
 namespace Remnant2SaveAnalyzer.Views.Pages;
 

@@ -87,7 +87,9 @@ internal static class Log
                 .Filter.ByExcluding(x =>
                     (!Properties.Settings.Default.ReportPerformance || !_startUp)
                     && x.Properties.ContainsKey(Category)
-                    && x.Properties[Category].ToString().Trim('"') == performance)
+                    && x.Properties[Category].ToString().Trim('"') == performance
+                    && (!x.Properties.ContainsKey("SourceContext") || x.Properties["SourceContext"].ToString().Trim('"') != "Analyzer:Profile")
+                    )
                 .Filter.ByExcluding(x =>
                     (!Properties.Settings.Default.ReportParserWarnings || !_startUp)
                     && x.Properties.ContainsKey(Category)

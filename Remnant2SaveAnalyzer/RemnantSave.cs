@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using lib.remnant2.analyzer.Model;
 using lib.remnant2.analyzer;
+using lib.remnant2.analyzer.Enums;
 using Newtonsoft.Json;
 using Remnant2SaveAnalyzer.Properties;
 using Remnant2SaveAnalyzer.Logging;
@@ -112,12 +113,12 @@ public class RemnantSave
 
             if (first)
             {
-                Log.StartUpFinished();
-
                 if (Settings.Default.ReportPlayerInfo)
                 {
                     ReportPlayerInfo();
                 }
+
+                Log.StartUpFinished();
 
                 if (Settings.Default.DumpAnalyzerJson)
                 {
@@ -164,17 +165,14 @@ public class RemnantSave
         logger.Information("BEGIN Account Awards");
         foreach (string award in _remnantDataset.AccountAwards)
         {
-            if (award.StartsWith("AccountAward_"))
+            LootItem? lootItem = ItemDb.GetItemByIdOrDefault(award);
+            if (lootItem == null)
             {
-                LootItem? lootItem = ItemDb.GetItemByIdOrDefault(award);
-                if (lootItem == null)
-                {
-                    logger.Warning($"  UnknownMarker account award: {award}");
-                }
-                else
-                {
-                    logger.Information($"  Account award: {lootItem.Name}");
-                }
+                logger.Warning($"  UnknownMarker account award: {award}");
+            }
+            else
+            {
+                logger.Information($"  Account award: {lootItem.Name}");
             }
         }
         foreach (Dictionary<string, string> m in ItemDb.Db.Where(x => x["Type"] == "award" && !_remnantDataset.AccountAwards.Exists(y => y == x["Id"])))
@@ -197,38 +195,126 @@ public class RemnantSave
             logger.Information($"Power Level: {character.Profile.PowerLevel}");
             logger.Information($"Item Level: {character.Profile.ItemLevel}");
             logger.Information($"Gender: {character.Profile.Gender}");
+            // Equipment------------------------------------------------------------
+            logger.Information("Equipment:");
+            List<InventoryItem> equipped = character.Profile.Inventory.Where(x => x.IsEquipped).ToList();
+            var equipment1 = equipped.Where(x => !x.IsTrait).OrderBy(x => x.EquippedSlot);
+            var traits1 = equipped.Where(x => x.IsTrait).OrderBy(x => x.EquippedSlot);
+
+            foreach (InventoryItem r in equipment1)
+            {
+                if (Enum.IsDefined(typeof(EquipmentSlot), r.EquippedSlot!))
+                {
+                    string level = r.Level is > 0 ? $" +{r.Level}" : "";
+                    logger.Information($"  {Utils.FormatCamelAsWords(r.EquippedSlot.ToString())}: {ItemDb.GetItemByProfileId(r.ProfileId)!.Name}{level}");
+                    foreach(InventoryItem m in character.Profile.Inventory.Where(x => x.EquippedModItemId == r.Id))
+                    {
+                        if (m.LootItem == null) continue;
+                        logger.Information($"  {Utils.FormatEquipmentSlot(r.EquippedSlot.ToString(),m.LootItem.Type,m.Level ?? 1,m.LootItem.Name)}");
+                    }
+                }
+            }
+
+            foreach (var r in traits1.Select(x => new { ItemDb.GetItemByProfileId(x.ProfileId)!.Name, Item = x }).OrderBy(x => x.Name))
+            {
+                logger.Information($"  Trait: {r.Name}, Level {r.Item.Level}");
+            }
+
+
+            // Loadouts ------------------------------------------------------------
+            if (character.Profile.Loadouts == null)
+            {
+                logger.Information("This character has no loadouts");
+            }
+            else
+            {
+                for (int i = 0; i < character.Profile.Loadouts.Count; i++)
+                {
+                    List<LoadoutRecord> loadoutRecords = character.Profile.Loadouts[i];
+                    if (loadoutRecords.Count == 0)
+                    {
+                        logger.Information($"Loadout {i+1}: empty");
+                    }
+                    else
+                    {
+                        logger.Information($"Loadout {i + 1}:");
+                        var equipment = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Equipment).OrderBy(x => x.Slot);
+                        var traits = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Trait).OrderBy(x => x.Slot);
+                        var other = loadoutRecords.Where(x => x.Type != LoadoutRecordType.Equipment && x.Type != LoadoutRecordType.Trait).ToList();
+                        
+                        foreach (LoadoutRecord r in equipment)
+                        {
+                            LoadoutSlot slot = (LoadoutSlot)r.Slot;
+                            logger.Information($"  {Utils.FormatEquipmentSlot(slot.ToString(),r.ItemType,r.Level,r.Name)}");
+                        }
+                        
+                        foreach (LoadoutRecord r in traits)
+                        {
+                            switch (r.Slot)
+                            {
+                                case 0:
+                                case 1:
+                                    continue; // These are archetypes we already display them in the equipment section, they are the same
+                                case 2:
+                                    logger.Information($"  Trait: {r.Name}, Level {r.Level}");
+                                    break;
+                                default:
+                                    logger.Warning($"  !!!Unknown Slot {r.Name}, {r.Type}, {r.Slot}, {r.Level}");
+                                    break;
+                            }
+                        }
+
+                        if (other.Count > 0)
+                        {
+                            foreach (LoadoutRecord r in other)
+                            {
+                                logger.Warning($"  !!!Unknown Type {r.Name}, {r.Type}, {r.Slot}, {r.Level}");
+                            }
+                        }
+                    }
+                }
+            }
 
             // Inventory ------------------------------------------------------------
             logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index}), mode: inventory");
 
-            IEnumerable<LootItem> lootItems = character.Profile.Inventory
-                .Select(x => ItemDb.GetItemByProfileId(x.Name))
-                .Where(x => x != null)!;
-
-            IEnumerable<string> absent = character.Profile.Inventory.Select(x => x.Name).Where(x => ItemDb.GetItemByProfileId(x) == null);
-            foreach (string s in absent)
-            {
-                if (!Utils.IsKnownInventoryItem(Utils.GetNameFromProfileId(s)))
-                {
-
-                    logger.Warning($"  Inventory item not found in database: {s}");
-                }
-            }
-
-            List<IGrouping<string, LootItem>> itemTypes = [.. lootItems
-                .GroupBy(x => x.Type)
+            List<IGrouping<string, InventoryItem>> itemTypes = [.. character.Profile.Inventory
+                .GroupBy(x => x.LootItem?.Type)
                 .OrderBy(x=> x.Key)];
 
-            foreach (IGrouping<string, LootItem> type in itemTypes)
+            foreach (IGrouping<string, InventoryItem> type in itemTypes)
             {
-                logger.Information("  " + Utils.Capitalize(type.Key)+":");
-                if (!type.Any())
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+                if (type.Key == null)
                 {
-                    logger.Information("    None");
+                    foreach (InventoryItem item in type)
+                    {
+                        if (!Utils.IsKnownInventoryItem(Utils.GetNameFromProfileId(item.ProfileId)))
+                        {
+                            logger.Warning($"  Inventory item not found in database: {item.ProfileId}");
+                        }
+                    }
                 }
-                foreach (LootItem lootItem in type.OrderBy(x => x.Name))
+                else
                 {
-                    logger.Information("    " + lootItem.Name);
+                    logger.Information("  " + Utils.Capitalize(type.Key) + ":");
+
+                    bool hasOne = false;
+                    foreach (InventoryItem item in type.OrderBy(x => x.LootItem!.Name))
+                    {
+                        if (item.Quantity is 0) continue;
+                        hasOne = true;
+                        string quantity = item.Quantity.HasValue ? $" x{item.Quantity.Value}" : "";
+                        string level = item.Level.HasValue ? $" (lvl {item.Level.Value})" : "";
+                        string favorited = item.Favorited ? " (favorite)" : "";
+                        string @new = item.New ? " (new)" : "";
+                        logger.Information("    " + item.LootItem!.Name + quantity + level + favorited + @new);
+                    }
+                    if (!hasOne)
+                    {
+                        logger.Information("    None");
+                    }
+
                 }
             }
 
@@ -243,18 +329,18 @@ public class RemnantSave
             }
             logger.Information($"Campaign difficulty: {character.Save.Campaign.Difficulty}");
             logger.Information($"Campaign play time: {Utils.FormatPlaytime(character.Save.Campaign.Playtime)}");
-            string respawnPoint = character.Save.Campaign.RespawnPoint ?? "Unknown";
-            //string respawnPoint = character.Save.Campaign.RespawnPoint == null ? "Unknown" : character.Save.Campaign.RespawnPoint.ToString();
+            string respawnPoint = character.Save.Campaign.RespawnPoint == null ? "Unknown" : character.Save.Campaign.RespawnPoint.ToString();
             logger.Information($"Campaign respawn point: {respawnPoint}");
 
 
             // Campaign Quest Inventory ------------------------------------------------------------
             logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: campaign");
-            lootItems = character.Save.Campaign.QuestInventory.Select(ItemDb.GetItemByProfileId).Where(x => x != null).OrderBy(x => x!.Name)!;
-            absent = character.Save.Campaign.QuestInventory.Where(x => ItemDb.GetItemByProfileId(x) == null);
-            foreach (string s in absent)
+            // TODO
+            IEnumerable<LootItem> lootItems = character.Save.Campaign.QuestInventory.Select(x => ItemDb.GetItemByProfileId(x.ProfileId)).Where(x => x != null).OrderBy(x => x!.Name)!;
+            IEnumerable<InventoryItem> unknown = character.Save.Campaign.QuestInventory.Where(x => ItemDb.GetItemByProfileId(x.ProfileId) == null);
+            foreach (InventoryItem s in unknown)
             {
-                logger.Warning($"  Quest item not found in database: {s}");
+                logger.Warning($"  Quest item not found in database: {s.ProfileId}");
             }
 
             foreach (LootItem lootItem in lootItems)
@@ -269,17 +355,16 @@ public class RemnantSave
                 logger.Information($"Adventure story: {character.Save.Adventure.Zones[0].Story}");
                 logger.Information($"Adventure difficulty: {character.Save.Adventure.Difficulty}");
                 logger.Information($"Adventure play time: {Utils.FormatPlaytime(character.Save.Adventure.Playtime)}");
-                respawnPoint = character.Save.Adventure.RespawnPoint ?? "Unknown";
-                //string respawnPoint = character.Save.Adventure.RespawnPoint == null ? "Unknown" : character.Save.Adventure.RespawnPoint.ToString();
+                respawnPoint = character.Save.Adventure.RespawnPoint == null ? "Unknown" : character.Save.Adventure.RespawnPoint.ToString();
                 logger.Information($"Adventure respawn point: {respawnPoint}");
 
                 // Adventure Quest Inventory ------------------------------------------------------------
                 logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: adventure");
-                lootItems = character.Save.Adventure.QuestInventory.Select(ItemDb.GetItemByProfileId).Where(x => x != null).OrderBy(x => x!.Name)!;
-                absent = character.Save.Adventure.QuestInventory.Where(x => ItemDb.GetItemByProfileId(x) == null);
-                foreach (string s in absent)
+                lootItems = character.Save.Adventure.QuestInventory.Select(x => ItemDb.GetItemByProfileId(x.ProfileId)).Where(x => x != null).OrderBy(x => x!.Name)!;
+                unknown = character.Save.Adventure.QuestInventory.Where(x => ItemDb.GetItemByProfileId(x.ProfileId) == null);
+                foreach (InventoryItem s in unknown)
                 {
-                    logger.Warning($"  Quest item not found in database: {s}");
+                    logger.Warning($"  Quest item not found in database: {s.ProfileId}");
                 }
 
                 foreach (LootItem lootItem in lootItems)
@@ -302,8 +387,8 @@ public class RemnantSave
             logger.Information($"BEGIN Quest log, Character {index+1} (save_{character.Index})");
             lootItems = character.Save.QuestCompletedLog
                 .Select(x => ItemDb.GetItemByIdOrDefault($"Quest_{x}")).Where(x => x != null)!;
-            absent = character.Save.QuestCompletedLog.Where(x => ItemDb.GetItemByIdOrDefault($"Quest_{x}") == null);
-            foreach (string s in absent)
+            IEnumerable<string> unknowns = character.Save.QuestCompletedLog.Where(x => ItemDb.GetItemByIdOrDefault($"Quest_{x}") == null);
+            foreach (string s in unknowns)
             {
                 logger.Warning($"  Quest not found in database: {s}");
             }
