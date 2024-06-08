@@ -196,7 +196,7 @@ public class RemnantSave
             logger.Information($"Item Level: {character.Profile.ItemLevel}");
             logger.Information($"Gender: {character.Profile.Gender}");
             // Equipment------------------------------------------------------------
-            logger.Information("Equipment:");
+            logger.Information($"BEGIN Equipment, Character {index + 1} (save_{character.Index})");
             List<InventoryItem> equipped = character.Profile.Inventory.Where(x => x.IsEquipped).ToList();
             var equipment1 = equipped.Where(x => !x.IsTrait).OrderBy(x => x.EquippedSlot);
             var traits1 = equipped.Where(x => x.IsTrait).OrderBy(x => x.EquippedSlot);
@@ -219,9 +219,10 @@ public class RemnantSave
             {
                 logger.Information($"  Trait: {r.Name}, Level {r.Item.Level}");
             }
-
+            logger.Information($"END Equipment, Character {index + 1} (save_{character.Index}),");
 
             // Loadouts ------------------------------------------------------------
+            logger.Information($"BEGIN Loadouts, Character {index + 1} (save_{character.Index})");
             if (character.Profile.Loadouts == null)
             {
                 logger.Information("This character has no loadouts");
@@ -274,9 +275,10 @@ public class RemnantSave
                     }
                 }
             }
+            logger.Information($"END Loadouts, Character {index + 1} (save_{character.Index})");
 
             // Inventory ------------------------------------------------------------
-            logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index}), mode: inventory");
+            logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index})");
 
             List<IGrouping<string, InventoryItem>> itemTypes = [.. character.Profile.Inventory
                 .GroupBy(x => x.LootItem?.Type)
@@ -297,6 +299,7 @@ public class RemnantSave
                 }
                 else
                 {
+                    if (type.Key == "armorspecial") continue;
                     logger.Information("  " + Utils.Capitalize(type.Key) + ":");
 
                     bool hasOne = false;
@@ -318,8 +321,15 @@ public class RemnantSave
                 }
             }
 
-            logger.Information($"END Inventory, Character {index+1} (save_{character.Index}), mode: inventory");
+            logger.Information($"END Inventory, Character {index+1} (save_{character.Index})");
 
+            // Equipment------------------------------------------------------------
+            logger.Information($"BEGIN Quick slots, Character {index + 1} (save_{character.Index})");
+            foreach (var item in character.Profile.QuickSlots)
+            {
+                logger.Information($"  {item.LootItem?.Name}");
+            }
+            logger.Information($"END Quick slots, Character {index + 1} (save_{character.Index})");
 
             // Campaign ------------------------------------------------------------
             logger.Information($"Save play time: {Utils.FormatPlaytime(character.Save.Playtime)}");

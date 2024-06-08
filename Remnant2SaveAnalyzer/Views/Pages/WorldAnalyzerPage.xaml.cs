@@ -415,6 +415,8 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 LootItem li = new() { Properties = rItem };
                 List<TreeListClass>? treeItem = itemChild[idx];
                 Debug.Assert(treeItem != null, nameof(treeItem) + " != null");
+                //rItem.TryGetValue("Note", out string? notes);
+                //treeItem.Add(new TreeListClass { Name = li.Name, Notes = notes, Tag = rItem });
                 treeItem.Add(new TreeListClass { Name = li.Name, Notes = rItem["Note"], Tag = rItem });
             }
 

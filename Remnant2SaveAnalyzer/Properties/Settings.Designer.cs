@@ -826,5 +826,41 @@ namespace Remnant2SaveAnalyzer.Properties {
                 this["ShowNoLocation"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool treeMissingNormalDream_Expanded {
+            get {
+                return ((bool)(this["treeMissingNormalDream_Expanded"]));
+            }
+            set {
+                this["treeMissingNormalDream_Expanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool treeMissingNormalConsumable_Expanded {
+            get {
+                return ((bool)(this["treeMissingNormalConsumable_Expanded"]));
+            }
+            set {
+                this["treeMissingNormalConsumable_Expanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool treeMissingNormalConcoction_Expanded {
+            get {
+                return ((bool)(this["treeMissingNormalConcoction_Expanded"]));
+            }
+            set {
+                this["treeMissingNormalConcoction_Expanded"] = value;
+            }
+        }
     }
 }
