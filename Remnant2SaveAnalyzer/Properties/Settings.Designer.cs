@@ -862,5 +862,17 @@ namespace Remnant2SaveAnalyzer.Properties {
                 this["treeMissingNormalConcoction_Expanded"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool treeMissingNormalFragment_Expanded {
+            get {
+                return ((bool)(this["treeMissingNormalFragment_Expanded"]));
+            }
+            set {
+                this["treeMissingNormalFragment_Expanded"] = value;
+            }
+        }
     }
 }
