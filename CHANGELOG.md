@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.19 (8 June 2024)
+- Further performance optimizations (still need more)
+- Relic fragments, Consumables, Concoctions and Dreams are now shown on the missing items page. The do not appear on the campaign/adventure page with a few minor exceptions (All-Seeing Eye, Dried Fruit, Koara Pellet and the four Dreams). They may be added at a later date.
+- The number next to Archetypes in the character drop down and on the Backups page is the actual number of acquired items by the character, and not some abstract ever growing number any more. At the time of writing there are 751 items to acquire.
+
 ## v0.0.18 (5 June 2024)
 - Amended Fix Necklace of Flowing Life crash fix from yesterday to not crash on Void Heart
 
