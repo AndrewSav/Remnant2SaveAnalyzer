@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.0.20 (13 June 2024)
+- Fixed a crash when a loadout has one archetype only
+- Fixed a crash on new character creation
+
 ## v0.0.19 (8 June 2024)
 - Further performance optimizations (still need more)
 - Relic fragments, Consumables, Concoctions and Dreams are now shown on the missing items page. The do not appear on the campaign/adventure page with a few minor exceptions (All-Seeing Eye, Dried Fruit, Koara Pellet and the four Dreams). They may be added at a later date.
