@@ -23,6 +23,7 @@ This is a list of things that are possible to add with the new engine, but which
 - See items offered in Cass shop
 - Track objectives progression, e.g. kill x bosses
 - Show last respawn point for characters
+- Show loadouts / inventory / equipped items
 
 ## Known issues
 
@@ -38,7 +39,7 @@ These are the save parsing libraries being used underneath:
 - <https://github.com/AndrewSav/lib.remnant2.saves> - This parses the save files to an object model
 - <https://github.com/AndrewSav/lib.remnant2.analyzer> - Uses the above to get information about items from the saves
 
-*Note: The object model for and Unreal Engine game save is incredibly complicated, it is not mean for usage out of the game, the way we do it here. It can lead to a lot of subtle usage issue, but it is much better than the original string parsing*
+*Note: The object model for and Unreal Engine game save is incredibly complicated, it is not mean for usage out of the game, the way we do it here. It can lead to a lot of subtle usage issues, but it is much better than the original string parsing*
 
 ## Acknowledgement
 

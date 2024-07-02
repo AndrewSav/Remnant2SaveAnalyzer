@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.0.21 (Unreleased)
+- Includeed Location and Type into filter on World Analyzer tab
+- Fixed regression with connections showing x2 for non-Yaesha zones
+- Fixed various typos and formatting
+- Updated dependencies
+
 ## v0.0.20 (13 June 2024)
 - Fixed a crash when a loadout has one archetype only
 - Fixed a crash on new character creation

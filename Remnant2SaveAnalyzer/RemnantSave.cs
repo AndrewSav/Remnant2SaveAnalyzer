@@ -280,6 +280,10 @@ public class RemnantSave
             // Inventory ------------------------------------------------------------
             logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index})");
 
+
+            var debug = character.Profile.Inventory.Where(x => x.ProfileId == "/Game/Items/Common/Item_DragonHeartUpgrade.Item_DragonHeartUpgrade_C").ToList();
+
+
             List<IGrouping<string, InventoryItem>> itemTypes = [.. character.Profile.Inventory
                 .GroupBy(x => x.LootItem?.Type)
                 .OrderBy(x=> x.Key)];
@@ -307,11 +311,31 @@ public class RemnantSave
                     {
                         if (item.Quantity is 0) continue;
                         hasOne = true;
+                        
+                        string name = item.LootItem!.Name;
                         string quantity = item.Quantity.HasValue ? $" x{item.Quantity.Value}" : "";
-                        string level = item.Level.HasValue ? $" (lvl {item.Level.Value})" : "";
-                        string favorited = item.Favorited ? " (favorite)" : "";
-                        string @new = item.New ? " (new)" : "";
-                        logger.Information("    " + item.LootItem!.Name + quantity + level + favorited + @new);
+                        string level = item.Level.HasValue ? $" +{item.Level.Value}" : "";
+                        string favorited = item.Favorited ? ", favorite" : "";
+                        string @new = item.New ? ", new" : "";
+                        string slotted = item.EquippedModItemId is >= 0 ? ", slotted" :"";
+                        if (item.LootItem!.Type == "fragment")
+                        {
+                            name = Utils.FormatRelicFragmentLevel(item.LootItem!.Name, item.Level ?? 1);
+                            level = item.Level.HasValue ? $" (lvl {item.Level.Value})" : "";
+                        }
+                        if (item.LootItem!.Type == "archetype" || item.LootItem!.Type == "trait")
+                        {
+                            level = item.Level.HasValue ? $", Level {item.Level.Value}" : "";
+                        }
+                        logger.Information("    " + name + quantity + level + favorited + @new + slotted);
+                        if (item.Id != null)
+                        {
+                            foreach (InventoryItem slottedItem in character.Profile.Inventory.Where(x => x.EquippedModItemId == item.Id))
+                            {
+                                LootItem li = slottedItem.LootItem!;
+                                logger.Information($"      {Utils.FormatEquipmentSlot(string.Empty,li.Type,slottedItem.Level ?? 1,li.Name)}");
+                            }
+                        }
                     }
                     if (!hasOne)
                     {

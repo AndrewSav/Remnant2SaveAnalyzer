@@ -619,15 +619,23 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         {
             return true;
         }
+        if (e.Location.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true;
+        }
+        if (e.Type.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true;
+        }
+        if (e.Name.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
+        {
+            return true;
+        }
         if (e.MissingItemsString.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
         {
             return true;
         }
         if (Properties.Settings.Default.ShowPossibleItems && e.PossibleItemsString.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
-        {
-            return true;
-        }
-        if (e.Name.Contains(filter, StringComparison.CurrentCultureIgnoreCase))
         {
             return true;
         }
