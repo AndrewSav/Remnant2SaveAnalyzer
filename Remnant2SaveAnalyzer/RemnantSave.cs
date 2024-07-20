@@ -195,6 +195,7 @@ public class RemnantSave
             logger.Information($"Power Level: {character.Profile.PowerLevel}");
             logger.Information($"Item Level: {character.Profile.ItemLevel}");
             logger.Information($"Gender: {character.Profile.Gender}");
+            logger.Information($"Relic Charges: {character.Profile.RelicCharges}");
             // Equipment------------------------------------------------------------
             logger.Information($"BEGIN Equipment, Character {index + 1} (save_{character.Index})");
             List<InventoryItem> equipped = character.Profile.Inventory.Where(x => x.IsEquipped).ToList();

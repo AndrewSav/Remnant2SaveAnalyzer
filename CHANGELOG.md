@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.0.22 (20 July)
+- Added check for 10 corrupted shards for corrupted weapon prerequisites
+- Added missing prerequisite of Savior to Corrupted Savior in the database
+- Improved notes for Game Master's Pride in the database
+
 ## v0.0.21 (Unreleased)
 - Includeed Location and Type into filter on World Analyzer tab
 - Fixed regression with connections showing x2 for non-Yaesha zones
