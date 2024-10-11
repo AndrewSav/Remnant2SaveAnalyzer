@@ -1042,7 +1042,7 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Normal.
+        ///   Looks up a localized string similar to Log.
         /// </summary>
         public static string Log {
             get {

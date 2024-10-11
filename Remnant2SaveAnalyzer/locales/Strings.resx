@@ -319,7 +319,7 @@
     <value>Light</value>
   </data>
   <data name="Log" xml:space="preserve">
-    <value>Normal</value>
+    <value>Log</value>
   </data>
   <data name="menuRestoreAll_Header" xml:space="preserve">
     <value>Everything</value>
