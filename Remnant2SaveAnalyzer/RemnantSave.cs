@@ -333,8 +333,15 @@ public class RemnantSave
                         {
                             foreach (InventoryItem slottedItem in character.Profile.Inventory.Where(x => x.EquippedModItemId == item.Id))
                             {
-                                LootItem li = slottedItem.LootItem!;
-                                logger.Information($"      {Utils.FormatEquipmentSlot(string.Empty,li.Type,slottedItem.Level ?? 1,li.Name)}");
+                                LootItem? li = slottedItem.LootItem;
+                                if (li == null)
+                                {
+                                    logger.Warning($"!!!!!!Equipped item with profileId: '{slottedItem.ProfileId}' not found");
+                                }
+                                else
+                                {
+                                    logger.Information($"      {Utils.FormatEquipmentSlot(string.Empty, li.Type, slottedItem.Level ?? 1, li.Name)}");
+                                }
                             }
                         }
                     }

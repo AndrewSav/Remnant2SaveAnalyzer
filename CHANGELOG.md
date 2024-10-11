@@ -1,6 +1,9 @@
 # Changelog
 
-## v0.0.22 (20 July)
+## v0.0.23 (12 Oct 2024)
+- Fix a DLC3 crash
+
+## v0.0.22 (20 July 2024)
 - Added check for 10 corrupted shards for corrupted weapon prerequisites
 - Added missing prerequisite of Savior to Corrupted Savior in the database
 - Improved notes for Game Master's Pride in the database
