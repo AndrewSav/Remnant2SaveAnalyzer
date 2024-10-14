@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.24 (14 Oct 2024)
+- Fix a DLC3 crash
+
 ## v0.0.23 (12 Oct 2024)
 - Fix a DLC3 crash
 

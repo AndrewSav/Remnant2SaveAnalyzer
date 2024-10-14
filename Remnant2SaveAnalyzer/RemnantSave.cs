@@ -207,7 +207,11 @@ public class RemnantSave
                 if (Enum.IsDefined(typeof(EquipmentSlot), r.EquippedSlot!))
                 {
                     string level = r.Level is > 0 ? $" +{r.Level}" : "";
-                    logger.Information($"  {Utils.FormatCamelAsWords(r.EquippedSlot.ToString())}: {ItemDb.GetItemByProfileId(r.ProfileId)!.Name}{level}");
+                    LootItem? item = ItemDb.GetItemByProfileId(r.ProfileId);
+                    logger.Information(item == null
+                        ? $"!!{r.ProfileId} not found in the database!"
+                        : $"  {Utils.FormatCamelAsWords(r.EquippedSlot.ToString())}: {item.Name}{level}");
+
                     foreach(InventoryItem m in character.Profile.Inventory.Where(x => x.EquippedModItemId == r.Id))
                     {
                         if (m.LootItem == null) continue;
