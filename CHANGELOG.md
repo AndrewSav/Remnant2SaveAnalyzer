@@ -1,5 +1,8 @@
 # Changelog
 
+## v0.0.26 (30 Oct 2024)
+- Minor fixes for Mortal Coil and Repair Tool detection
+
 ## v0.0.25 (28 Oct 2024)
 - Add DLC3 items
 
