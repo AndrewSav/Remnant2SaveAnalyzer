@@ -1,5 +1,9 @@
 # Changelog
 
+
+## v0.0.27 (2 Nov 2024)
+- Fix Cessation Bulbel detection
+
 ## v0.0.26 (30 Oct 2024)
 - Minor fixes for Mortal Coil and Repair Tool detection
 
