@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v0.0.28 (15 Nov 2024)
+- Suppress warning about unknow relic charge item
+- Fix engram names displayed instead of archetype names
+
 ## v0.0.27 (2 Nov 2024)
 - Fix Cessation Bulbel detection
 
