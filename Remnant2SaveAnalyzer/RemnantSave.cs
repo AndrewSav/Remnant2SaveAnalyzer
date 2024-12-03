@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using lib.remnant2.analyzer.Model;
 using lib.remnant2.analyzer;
 using lib.remnant2.analyzer.Enums;
+using lib.remnant2.saves.Model.Memory;
 using Newtonsoft.Json;
 using Remnant2SaveAnalyzer.Properties;
 using Remnant2SaveAnalyzer.Logging;
@@ -30,12 +31,14 @@ public class RemnantSave
     private static readonly object LoadLock = new();
 
     public static readonly Guid FolderIdSavedGames = new(0x4C5C32FF, 0xBB9D, 0x43B0, 0xB5, 0xB4, 0x2D, 0x72, 0xE5, 0x4E, 0xAA, 0xA4);
-    [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, PreserveSig = false)]
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
+    [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, PreserveSig = false)]
     static extern string SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken = default);
 #pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
 
     public RemnantSave(string path, bool skipUpdate = false)
+#pragma warning restore IDE0079 // Remove unnecessary suppression
     {
         if (!Directory.Exists(path))
         {
@@ -103,6 +106,7 @@ public class RemnantSave
 
             try
             {
+                Analyzer.CheckBuildNumber(_savePath);
                 _remnantDataset = Analyzer.Analyze(_savePath, _remnantDataset);
             }
             catch (Exception ex)
@@ -161,6 +165,9 @@ public class RemnantSave
 
         logger.Information($"Active character save: save_{_remnantDataset.ActiveCharacterIndex}.sav");
 
+        FileHeader fhp = _remnantDataset.ProfileSaveFile!.FileHeader;
+        logger.Information($"Profile save file version: {fhp.Version}, game build: {fhp.BuildNumber}");
+
         // Account Awards ------------------------------------------------------------
         logger.Information("BEGIN Account Awards");
         foreach (string award in _remnantDataset.AccountAwards)
@@ -184,11 +191,16 @@ public class RemnantSave
         for (int index = 0; index < _remnantDataset.Characters.Count; index++)
         {
             // Character ------------------------------------------------------------
-            var character = _remnantDataset.Characters[index];
+            Character character = _remnantDataset.Characters[index];
             int acquired = character.Profile.AcquiredItems;
             int missing = character.Profile.MissingItems.Count;
             int total = acquired + missing;
+
+
+
             logger.Information($"Character {index+1} (save_{character.Index}), Acquired Items: {acquired}, Missing Items: {missing}, Total: {total}");
+            FileHeader fh = character.WorldSaveFile!.FileHeader;
+            logger.Information($"World save file version: {fh.Version}, game build: {fh.BuildNumber}");
             logger.Information($"Is Hardcore: {character.Profile.IsHardcore}");
             logger.Information($"Trait Rank: {character.Profile.TraitRank}");
             logger.Information($"Last Saved Trait Points: {character.Profile.LastSavedTraitPoints}");
