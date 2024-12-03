@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v0.0.30 (4 Dec 2024)
+- Fix a spelling mistake in items notes
+
 ## v0.0.29 (3 December 2024)
 - Update dependencies
 - Add warning if the save files game build is less than expected
