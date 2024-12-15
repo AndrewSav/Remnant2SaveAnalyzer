@@ -557,9 +557,15 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
     }
     private static void SearchItem(LootItem item)
     {
+        string name = item.Name;
+        if (item is LocalisedLootItem lootItem)
+        {
+            name = lootItem.OriginalName;
+        }
+        
         string wikiQuery = Properties.Settings.Default.Wiki == "remwiki" ? 
-            $"https://remnant.wiki/{item.Name}" : 
-            $"https://remnant2.wiki.fextralife.com/{item.Name}";
+            $"https://remnant.wiki/{name}" : 
+            $"https://remnant2.wiki.fextralife.com/{name}";
         Process.Start("explorer.exe", wikiQuery);
     }
     private void ExpandAllItem_Click(object sender, RoutedEventArgs e)
@@ -826,6 +832,8 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         }
 
         public override string Name => Id == Loc.GameT(Id) ? base.Name : Loc.GameT(Id);
+
+        public string OriginalName => base.Name;
 
         // ReSharper disable UnusedMember.Global
         public Brush? PossibleItemTextColor => 

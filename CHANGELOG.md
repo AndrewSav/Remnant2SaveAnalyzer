@@ -1,6 +1,9 @@
 # Changelog
 
 
+## v0.0.31 (16 Dec 2024)
+- When opening wiki, use original name of the item, not localised name
+
 ## v0.0.30 (4 Dec 2024)
 - Fix a spelling mistake in items notes
 
