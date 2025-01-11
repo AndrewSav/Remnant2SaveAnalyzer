@@ -57,14 +57,14 @@ internal class UpdateCheck
                     };
                     Hyperlink hyperLink = new()
                     {
-                        NavigateUri = new Uri($"https://github.com/{Repo}/releases/tag/{remoteVersion}")
+                        NavigateUri = new($"https://github.com/{Repo}/releases/tag/{remoteVersion}")
                     };
                     hyperLink.Inlines.Add(Loc.T("Changelog"));
                     hyperLink.RequestNavigate += (_, e) => Process.Start("explorer.exe", e.Uri.ToString());
                     TextBlock txtBlock = new()
                     {
                         Text = Loc.T("The latest version of Remnant 2 Save Analyzer is {CurrentVersion}. You are using version {LocalVersion}. Do you want to upgrade the application now?",
-                            new LocalizationOptions
+                            new()
                             {
                                 {
                                     "CurrentVersion", remoteVersion.ToString()

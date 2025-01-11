@@ -395,7 +395,7 @@ public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
         {
             return;
         }
-        var wiki = selected.Tag.ToString();
+        string? wiki = selected.Tag.ToString();
         if (wiki == Properties.Settings.Default.Wiki)
         {
             return;
@@ -423,7 +423,10 @@ public partial class SettingsPage : INavigableView<ViewModels.SettingsViewModel>
         Clipboard.SetDataObject(SettingsPath);
     }
     // ReSharper disable UnusedMember.Global
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable CA1822
     public string SettingsPath => ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+#pragma warning restore CA1822
     public string SettingsPathText => Loc.T("Settings path (right click to copy)") + ": " + SettingsPath;
 
 }

@@ -16,6 +16,6 @@ internal class EventTransfer
     }
     internal static void Transfer(object s)
     {
-            Event?.Invoke(null, new MessageArgs(s));
+            Event?.Invoke(null, new(s));
         }
 }

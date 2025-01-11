@@ -11,6 +11,7 @@ using lib.remnant2.saves.Model.Memory;
 using Newtonsoft.Json;
 using Remnant2SaveAnalyzer.Properties;
 using Remnant2SaveAnalyzer.Logging;
+using Serilog;
 using Log = Remnant2SaveAnalyzer.Logging.Log;
 
 namespace Remnant2SaveAnalyzer;
@@ -158,7 +159,7 @@ public class RemnantSave
     {
         Debug.Assert(_remnantDataset != null, nameof(_remnantDataset) + " != null");
 
-        var logger = Log.Logger
+        ILogger logger = Log.Logger
             .ForContext<RemnantSave>()
             .ForContext(Log.Category, Log.PlayerInfo);
             
@@ -211,8 +212,8 @@ public class RemnantSave
             // Equipment------------------------------------------------------------
             logger.Information($"BEGIN Equipment, Character {index + 1} (save_{character.Index})");
             List<InventoryItem> equipped = character.Profile.Inventory.Where(x => x.IsEquipped).ToList();
-            var equipment1 = equipped.Where(x => !x.IsTrait).OrderBy(x => x.EquippedSlot);
-            var traits1 = equipped.Where(x => x.IsTrait).OrderBy(x => x.EquippedSlot);
+            IOrderedEnumerable<InventoryItem> equipment1 = equipped.Where(x => !x.IsTrait).OrderBy(x => x.EquippedSlot);
+            IOrderedEnumerable<InventoryItem> traits1 = equipped.Where(x => x.IsTrait).OrderBy(x => x.EquippedSlot);
 
             foreach (InventoryItem r in equipment1)
             {
@@ -256,9 +257,9 @@ public class RemnantSave
                     else
                     {
                         logger.Information($"Loadout {i + 1}:");
-                        var equipment = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Equipment).OrderBy(x => x.Slot);
-                        var traits = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Trait).OrderBy(x => x.Slot);
-                        var other = loadoutRecords.Where(x => x.Type != LoadoutRecordType.Equipment && x.Type != LoadoutRecordType.Trait).ToList();
+                        IOrderedEnumerable<LoadoutRecord> equipment = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Equipment).OrderBy(x => x.Slot);
+                        IOrderedEnumerable<LoadoutRecord> traits = loadoutRecords.Where(x => x.Type == LoadoutRecordType.Trait).OrderBy(x => x.Slot);
+                        List<LoadoutRecord> other = loadoutRecords.Where(x => x.Type != LoadoutRecordType.Equipment && x.Type != LoadoutRecordType.Trait).ToList();
                         
                         foreach (LoadoutRecord r in equipment)
                         {
@@ -298,7 +299,7 @@ public class RemnantSave
             logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index})");
 
 
-            var debug = character.Profile.Inventory.Where(x => x.ProfileId == "/Game/Items/Common/Item_DragonHeartUpgrade.Item_DragonHeartUpgrade_C").ToList();
+            List<InventoryItem> debug = character.Profile.Inventory.Where(x => x.ProfileId == "/Game/Items/Common/Item_DragonHeartUpgrade.Item_DragonHeartUpgrade_C").ToList();
 
 
             List<IGrouping<string, InventoryItem>> itemTypes = [.. character.Profile.Inventory
@@ -373,7 +374,7 @@ public class RemnantSave
 
             // Equipment------------------------------------------------------------
             logger.Information($"BEGIN Quick slots, Character {index + 1} (save_{character.Index})");
-            foreach (var item in character.Profile.QuickSlots)
+            foreach (InventoryItem item in character.Profile.QuickSlots)
             {
                 logger.Information($"  {item.LootItem?.Name}");
             }

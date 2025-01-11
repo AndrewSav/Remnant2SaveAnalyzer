@@ -77,7 +77,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
         {
             dataBackups.CanUserDeleteRows = false;
             dataBackups.CanUserAddRows = false;
-            dataBackups.Items.SortDescriptions.Add(new SortDescription("SaveDate", ListSortDirection.Descending));
+            dataBackups.Items.SortDescriptions.Add(new("SaveDate", ListSortDirection.Descending));
 
             if (Properties.Settings.Default.BackupFolder.Length == 0)
             {
@@ -239,7 +239,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
                     }
                     else
                     {
-                        newBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                        newBackupTime = new(1970, 1, 1, 0, 0, 0, 0);
                     }
                     if (DateTime.Compare(DateTime.Now, newBackupTime) >= 0)
                     {
@@ -500,7 +500,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
                 }
             }
 
-            foreach (var backup in removeBackups)
+            foreach (SaveBackup backup in removeBackups)
             {
                 _listBackups.Remove(backup);
             }
@@ -520,7 +520,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
     private void UpdateSavedNames()
     {
         List<string> savedNames = [];
-        foreach (var backup in _listBackups)
+        foreach (SaveBackup backup in _listBackups)
         {
             if (!backup.Name.Equals(backup.SaveDate.Ticks.ToString()))
             {
@@ -534,7 +534,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
     private void UpdateSavedKeeps()
     {
         List<string> savedKeeps = [];
-        foreach (var backup in _listBackups)
+        foreach (SaveBackup backup in _listBackups)
         {
             if (backup.Keep)
             {
@@ -559,7 +559,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
         checkBox.SetBinding(ToggleButton.IsCheckedProperty,
             new Binding
             {
-                Path = new PropertyPath(strHeader),
+                Path = new(strHeader),
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             }

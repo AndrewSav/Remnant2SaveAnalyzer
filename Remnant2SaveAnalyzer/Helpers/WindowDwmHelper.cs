@@ -19,9 +19,9 @@ internal class WindowDwmHelper
         /// <returns>If the window handle identifies an existing window, the return value is nonzero.</returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
+#pragma warning disable IDE0079 // Remove unnecessary suppression
 #pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
         public static extern bool IsWindow([In] IntPtr hWnd);
-#pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
     }
     internal class Utilities
     {
@@ -91,7 +91,7 @@ internal class WindowDwmHelper
         }
     internal static WindowInteropHelper GetWindow(Window window)
     {
-            return new WindowInteropHelper(window);
+            return new(window);
         }
     internal static bool ApplyDwm(Window window, UxMaterials type)
     {
@@ -177,7 +177,7 @@ internal class WindowDwmHelper
     private static SolidColorBrush GetFallbackBackgroundBrush()
     {
             return Theme.GetAppTheme() == ThemeType.Dark
-                ? new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20))
+                ? new(Color.FromArgb(0xFF, 0x20, 0x20, 0x20))
                 : new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xFA, 0xFA));
         }
 }

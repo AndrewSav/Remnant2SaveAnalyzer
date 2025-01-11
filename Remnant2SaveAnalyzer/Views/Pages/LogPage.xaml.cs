@@ -55,7 +55,7 @@ public partial class LogPage : INavigableView<ViewModels.LogViewModel>
                 {
                     infoBar.Severity = InfoBarSeverity.Success;
                 }
-                infoBar.ContextMenu = new System.Windows.Controls.ContextMenu();
+                infoBar.ContextMenu = new();
                 MenuItem menuCopyMessage = new()
                 {
                     Header = Loc.T("Copy"),

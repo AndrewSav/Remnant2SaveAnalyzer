@@ -158,7 +158,7 @@ public partial class MainWindow : INavigationWindow
             RootNavigation.Visibility = Visibility.Visible;
             BtnAlwayOnTop.Visibility = Visibility.Visible;
             Caption.Visibility = Visibility.Visible;
-            Border.Margin = new Thickness(0,46,0,0);
+            Border.Margin = new(0,46,0,0);
             EventTransfer.Transfer(Visibility.Visible);
         }
         if (Settings.Default.EnableOpacity == false) { return; }
@@ -177,7 +177,7 @@ public partial class MainWindow : INavigationWindow
             RootNavigation.Visibility = Visibility.Collapsed;
             BtnAlwayOnTop.Visibility = Visibility.Collapsed;
             Caption.Visibility = Visibility.Collapsed;
-            Border.Margin = new Thickness(0);
+            Border.Margin = new(0);
             EventTransfer.Transfer(Visibility.Collapsed);
         }
         if (Settings.Default.EnableOpacity == false) { return; }

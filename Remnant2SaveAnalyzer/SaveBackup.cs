@@ -46,7 +46,7 @@ public class SaveBackup : IEditableObject
             if (_saveData.Keep != value)
             {
                 _saveData.Keep = value;
-                OnUpdated(new UpdatedEventArgs("Keep"));
+                OnUpdated(new("Keep"));
             }
         }
     }
@@ -73,7 +73,7 @@ public class SaveBackup : IEditableObject
             Notifications.Error($"Could not read profile from backup: {ex}");
         }
 
-        _saveData = new SaveData
+        _saveData = new()
         {
             Name = SaveDateTime.Ticks.ToString(),
             Date = SaveDateTime,
@@ -125,21 +125,21 @@ public class SaveBackup : IEditableObject
         {
             if (!_backupData.Name.Equals(_saveData.Name))
             {
-                OnUpdated(new UpdatedEventArgs("Name"));
+                OnUpdated(new("Name"));
             }
             if (!_backupData.Date.Equals(_saveData.Date))
             {
-                OnUpdated(new UpdatedEventArgs("SaveDate"));
+                OnUpdated(new("SaveDate"));
             }
             if (!_backupData.Keep.Equals(_saveData.Keep))
             {
-                OnUpdated(new UpdatedEventArgs("Keep"));
+                OnUpdated(new("Keep"));
             }
             if (!_backupData.Active.Equals(_saveData.Active))
             {
-                OnUpdated(new UpdatedEventArgs("Active"));
+                OnUpdated(new("Active"));
             }
-            _backupData = new SaveData();
+            _backupData = new();
             _inTxn = false;
         }
     }

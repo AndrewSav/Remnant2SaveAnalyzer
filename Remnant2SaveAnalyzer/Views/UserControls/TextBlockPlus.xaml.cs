@@ -27,14 +27,14 @@ public partial class TextBlockPlus
         get => (string)GetValue(TextProperty);
         set => SetValue(TextProperty, value);
     }
-    public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBlockPlus), new PropertyMetadata(""));
+    public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(Text), typeof(string), typeof(TextBlockPlus), new(""));
     [Category("Extend Properties")]
     public int RollingSpeed
     {
         get => (int)GetValue(RollingSpeedProperty);
         set => SetValue(RollingSpeedProperty, value);
     }
-    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(250));
+    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(TextBlockPlus), new(250));
 
     [Category("Extend Properties")]
     public int RollbackSpeed
@@ -42,7 +42,7 @@ public partial class TextBlockPlus
         get => (int)GetValue(RollbackSpeedProperty);
         set => SetValue(RollbackSpeedProperty, value);
     }
-    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(TextBlockPlus), new PropertyMetadata(1000));
+    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(TextBlockPlus), new(1000));
     #endregion 
 }
 
@@ -56,13 +56,13 @@ public sealed class RollingTextBlockBehavior : Behavior<UIElement>
         get => (int)GetValue(RollingSpeedProperty);
         set => SetValue(RollingSpeedProperty, value);
     }
-    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(250));
+    public static readonly DependencyProperty RollingSpeedProperty = DependencyProperty.Register(nameof(RollingSpeed), typeof(int), typeof(RollingTextBlockBehavior), new(250));
     public int RollbackSpeed
     {
         get => (int)GetValue(RollbackSpeedProperty);
         set => SetValue(RollbackSpeedProperty, value);
     }
-    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(RollingTextBlockBehavior), new PropertyMetadata(1000));
+    public static readonly DependencyProperty RollbackSpeedProperty = DependencyProperty.Register(nameof(RollbackSpeed), typeof(int), typeof(RollingTextBlockBehavior), new(1000));
 
     private readonly Storyboard _storyBoard = new();
     private readonly DoubleAnimation _animation = new();
@@ -81,7 +81,7 @@ public sealed class RollingTextBlockBehavior : Behavior<UIElement>
                 ScrollViewerBehavior.HorizontalOffsetProperty
             ];
 
-            Storyboard.SetTargetProperty(_animation, new PropertyPath("(0)", propertyChain.Select(x => (object)x).ToArray()));
+            Storyboard.SetTargetProperty(_animation, new("(0)", propertyChain.Select(x => (object)x).ToArray()));
             _storyBoard.Children.Add(_animation);
         }
     protected override void OnDetaching()

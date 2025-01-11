@@ -23,12 +23,12 @@ public class RemnantNotificationsSink(ITextFormatter? formatter) : ILogEventSink
             message = tw.ToString();
         }
 
-        if (!logEvent.Properties.ContainsKey("RemnantNotificationType"))
+        if (!logEvent.Properties.TryGetValue("RemnantNotificationType", out LogEventPropertyValue? notificationType))
         {
             return;
         }
 
-        if (logEvent.Properties["RemnantNotificationType"] is not ScalarValue scalar)
+        if (notificationType is not ScalarValue scalar)
         {
             return;
         }

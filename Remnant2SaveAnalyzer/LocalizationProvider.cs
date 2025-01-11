@@ -20,7 +20,7 @@ internal partial class Loc
         if (options.Has("locale") && options["locale"] != currentCulture.ToString())
         {
             WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.SetCurrentThreadCulture = false;
-            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new CultureInfo(options["locale"]);
+            WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = new(options["locale"]);
             T? translation = LocExtension.GetLocalizedValue<T>(Assembly.GetCallingAssembly().GetName().Name + $":{ns}:" + key);
             WPFLocalizeExtension.Engine.LocalizeDictionary.Instance.Culture = currentCulture;
             return translation;
@@ -57,7 +57,7 @@ internal partial class Loc
                 LocalizationOptions optionsToUse = options;
                 if (match.Groups.ContainsKey("namespace") && match.Groups["namespace"].Value != "")
                 {
-                    optionsToUse = new LocalizationOptions(options)
+                    optionsToUse = new(options)
                     {
                         ["namespace"] = match.Groups["namespace"].Value
                     };
@@ -70,7 +70,7 @@ internal partial class Loc
     }
     public static string T(string key)
     {
-        return T(key, new LocalizationOptions { { "namespace", "Strings" } });
+        return T(key, new() { { "namespace", "Strings" } });
     }
     //public static string GameT(string key, LocalizationOptions options)
     //{
@@ -79,7 +79,7 @@ internal partial class Loc
     //}
     public static string GameT(string key)
     {
-        return T(key, new LocalizationOptions { { "namespace", "GameStrings" } });
+        return T(key, new() { { "namespace", "GameStrings" } });
     }
 
     [GeneratedRegex(@"{(?:(?<namespace>\w+?):)?(?<sub>\w+?)}")]

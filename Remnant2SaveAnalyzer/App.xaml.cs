@@ -94,8 +94,8 @@ public partial class App
 
     private static List<CultureInfo> EnumerateSupportedCultures()
     {
-        var assembly = Assembly.GetExecutingAssembly();
-        var name = assembly.GetName();
+        Assembly assembly = Assembly.GetExecutingAssembly();
+        AssemblyName name = assembly.GetName();
         ResourceManager rm = new($"{name.Name}.locales.Strings", assembly);
         ResourceManager rm2 = new($"{name.Name}.locales.GameStrings", assembly);
 

@@ -105,14 +105,14 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         OptionGrid.Visibility = (Visibility)message.Message;
         if (message.Message is Visibility.Visible)
         {
-            tabGrid.Margin = new Thickness(23, 0, 23, 23);
+            tabGrid.Margin = new(23, 0, 23, 23);
             tabCampaign.Visibility = Visibility.Visible;
             tabAdventure.Visibility = Visibility.Visible;
             tabMissing.Visibility = Visibility.Visible;
         }
         else if (message.Message is Visibility.Collapsed)
         {
-            tabGrid.Margin = new Thickness(4, 0, 4, 4);
+            tabGrid.Margin = new(4, 0, 4, 4);
             tabCampaign.Visibility = Visibility.Collapsed;
             tabAdventure.Visibility = Visibility.Collapsed;
             tabMissing.Visibility = Visibility.Collapsed;
@@ -150,7 +150,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
 
     protected void OnPropertyChanged(string propertyName)
     {
-        PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        PropertyChanged?.Invoke(this, new(propertyName));
     }
 
     private void FontSizeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -188,7 +188,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             {
                 return;
             }
-            if (openFolderDialog.SelectedPath == Properties.Settings.Default.SaveFolder || openFolderDialog.SelectedPath == _save.SaveFolderPath)
+            if (openFolderDialog.SelectedPath == RemnantSave.GetSaveFolder() ||  openFolderDialog.SelectedPath == Properties.Settings.Default.SaveFolder || openFolderDialog.SelectedPath == _save.SaveFolderPath)
             {
                 Notifications.Error(Loc.T("export_save_invalid_folder_error"));
                 return;
@@ -284,7 +284,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
             new Binding
             {
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                Path = new PropertyPath(strProperty),
+                Path = new(strProperty),
                 Mode = BindingMode.OneWay
             }
         );
@@ -415,7 +415,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
                 LootItem li = new() { Properties = rItem };
                 List<TreeListClass>? treeItem = itemChild[idx];
                 Debug.Assert(treeItem != null, nameof(treeItem) + " != null");
-                treeItem.Add(new TreeListClass { Name = li.Name, Notes = rItem["Note"], Tag = rItem });
+                treeItem.Add(new() { Name = li.Name, Notes = rItem["Note"], Tag = rItem });
             }
 
             treeMissingItems.ItemsSource = null;
@@ -921,7 +921,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         }
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new(propertyName));
         }
         public int CompareTo(TreeListClass? other)
         {
