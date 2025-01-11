@@ -1,6 +1,9 @@
 # Changelog
 
 
+## 0.0.32 (11 Jan 2025)
+- Fix Zohee's Ring description, add back stamina cost fragment
+
 ## v0.0.31 (16 Dec 2024)
 - When opening wiki, use original name of the item, not localised name
 
