@@ -3,6 +3,8 @@
 
 ## 0.0.33 (12 Jan 2025)
 - Fix rare issue with Nimue Ribbon detection
+- Improved detection for Faelin/Faerin/One True King sigil
+- Allow detection of Nimue's Ribbon, One True King Sigil, Quilted Heart, Void Heart, Anguish, Polygun, Trinity Crossbow, Genesis and Redeemer at Ward 13 vendors when they are unlocked as account award
 
 ## 0.0.32 (11 Jan 2025)
 - Fix Zohee's Ring description, add back stamina cost fragment
