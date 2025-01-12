@@ -67,6 +67,8 @@ internal static class SaveWatcher
             if (Watcher.Path != path)
             {
                 Watcher.Path = path;
+                Watcher.Filter = path.EndsWith("\\wgs") ? "containers.index" : "profile.sav";
+                Watcher.IncludeSubdirectories = path.EndsWith("\\wgs");
             }
             Watcher.EnableRaisingEvents = true;
         }

@@ -1,6 +1,9 @@
 # Changelog
 
 
+## 0.0.33 (12 Jan 2025)
+- Fix rare issue with Nimue Ribbon detection
+
 ## 0.0.32 (11 Jan 2025)
 - Fix Zohee's Ring description, add back stamina cost fragment
 

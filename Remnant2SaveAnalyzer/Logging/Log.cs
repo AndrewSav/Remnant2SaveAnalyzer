@@ -79,6 +79,7 @@ internal static class Log
             string performance = lib.remnant2.analyzer.Log.Performance;
             string prerequisites = lib.remnant2.analyzer.Log.Prerequisites;
             string unknownItems = lib.remnant2.analyzer.Log.UnknownItems;
+            string savesLocation = lib.remnant2.analyzer.Log.SavesLocation;
 
             LoggerConfiguration config = new LoggerConfiguration()
                 .MinimumLevel.ControlledBy(Switch)
@@ -99,6 +100,10 @@ internal static class Log
                     (!Properties.Settings.Default.DebugPrerequisites || !_startUp)
                     && x.Properties.ContainsKey(Category)
                     && x.Properties[Category].ToString().Trim('"') == prerequisites)
+                .Filter.ByExcluding(x =>
+                    (!Properties.Settings.Default.DebugSavesLocation || !_startUp)
+                    && x.Properties.ContainsKey(Category)
+                    && x.Properties[Category].ToString().Trim('"') == savesLocation)
                 .Filter.ByExcluding(x =>
                     x.Properties.ContainsKey(Category)
                     && x.Properties[Category].ToString().Trim('"') == unknownItems

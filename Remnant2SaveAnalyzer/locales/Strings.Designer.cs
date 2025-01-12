@@ -304,6 +304,15 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debug saves location.
+        /// </summary>
+        public static string chkDebugSavesLocation {
+            get {
+                return ResourceManager.GetString("chkDebugSavesLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dump Analyzer data structures to analyzer.json .
         /// </summary>
         public static string chkDumpAnalyzerJson {
@@ -934,6 +943,15 @@ namespace Remnant2SaveAnalyzer.locales {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string lblMissingItemColor_Content {
+            get {
+                return ResourceManager.GetString("lblMissingItemColor_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to World analzyer missing item color.
         /// </summary>
         public static string lblMissingItemColor_Text {
@@ -1038,6 +1056,15 @@ namespace Remnant2SaveAnalyzer.locales {
         public static string Light {
             get {
                 return ResourceManager.GetString("Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
             }
         }
         
@@ -1462,6 +1489,15 @@ namespace Remnant2SaveAnalyzer.locales {
         public static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         

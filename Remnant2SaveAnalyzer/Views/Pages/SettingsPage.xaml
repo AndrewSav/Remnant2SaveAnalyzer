@@ -332,6 +332,9 @@
                 <WrapPanel Margin="0,16,0,0">
                     <ui:ToggleSwitch Name="chkDebugPrerequisites" Content="{lex:Loc}" IsChecked="{Binding DebugPrerequisites}" VerticalAlignment="Center" Margin="0,0,5,0"/>
                 </WrapPanel>
+                <WrapPanel Margin="0,16,0,0">
+                    <ui:ToggleSwitch Name="chkDebugSavesLocation" Content="{lex:Loc}" IsChecked="{Binding DebugSavesLocation}" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                </WrapPanel>
                 <WrapPanel Margin="0,8,0,0">
                     <ComboBox Name="cmbLogLevel" VerticalAlignment="Top" Width="150" SelectionChanged="CmbLogLevel_SelectionChanged">
                         <ComboBox.Items>

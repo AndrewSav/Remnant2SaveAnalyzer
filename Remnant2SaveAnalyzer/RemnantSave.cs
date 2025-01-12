@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using lib.remnant2.analyzer.Model;
 using lib.remnant2.analyzer;
 using lib.remnant2.analyzer.Enums;
+using lib.remnant2.analyzer.SaveLocation;
 using lib.remnant2.saves.Model.Memory;
 using Newtonsoft.Json;
 using Remnant2SaveAnalyzer.Properties;
@@ -21,14 +22,8 @@ public class RemnantSave
     private Dataset? _remnantDataset;
     public Dataset? Dataset => _remnantDataset;
 
-        
-    // ReSharper disable CommentTypo
-    //public static readonly string DefaultWgsSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\PerfectWorldEntertainment.RemnantFromtheAshes_jrajkyc4tsa6w\SystemAppData\wgs";
-    // ReSharper restore CommentTypo
-    private readonly string _savePath;
-    private readonly string _profileFile;
-    private readonly RemnantSaveType _saveType;
-    private readonly WindowsSave? _winSave;
+    private readonly string? _savePath;
+    private readonly string? _profileFile;
     private static readonly object LoadLock = new();
 
     public static readonly Guid FolderIdSavedGames = new(0x4C5C32FF, 0xBB9D, 0x43B0, 0xB5, 0xB4, 0x2D, 0x72, 0xE5, 0x4E, 0xAA, 0xA4);
@@ -36,35 +31,15 @@ public class RemnantSave
 #pragma warning disable SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
     [DllImport("shell32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, PreserveSig = false)]
     static extern string SHGetKnownFolderPath([MarshalAs(UnmanagedType.LPStruct)] Guid rfid, uint dwFlags, IntPtr hToken = default);
-#pragma warning restore SYSLIB1054 // Use 'LibraryImportAttribute' instead of 'DllImportAttribute' to generate P/Invoke marshalling code at compile time
 
     public RemnantSave(string path, bool skipUpdate = false)
-#pragma warning restore IDE0079 // Remove unnecessary suppression
     {
-        if (!Directory.Exists(path))
-        {
-            throw new Exception(path + " does not exist.");
+        string? profileFile = SaveUtils.GetSavePath(path, "profile");
+        if (profileFile == null) {
+            return;
         }
 
-        if (File.Exists(path + @"\profile.sav"))
-        {
-            _saveType = RemnantSaveType.Normal;
-            _profileFile = "profile.sav";
-        }
-        else
-        {
-            string[] winFiles = Directory.GetFiles(path, "container.*");
-            if (winFiles.Length > 0)
-            {
-                _winSave = new WindowsSave(winFiles[0]);
-                _saveType = RemnantSaveType.WindowsStore;
-                _profileFile = _winSave.Profile;
-            }
-            else
-            {
-                throw new Exception(path + " is not a valid save.");
-            }
-        }
+        _profileFile = profileFile;
         _savePath = path;
         if (!skipUpdate)
         {
@@ -72,31 +47,17 @@ public class RemnantSave
         }
     }
 
-    public string SaveFolderPath => _savePath;
+    public string? SaveFolderPath => _savePath;
 
-    public string SaveProfilePath => _savePath + $@"\{_profileFile}";
+    public string? SaveProfilePath => _profileFile;
 
-    public bool Valid => _saveType == RemnantSaveType.Normal || (_winSave?.Valid ?? false);
+    public bool Valid => _profileFile != null;
 
     public static bool ValidSaveFolder(string folder)
     {
-                
-        if (!Directory.Exists(folder))
-        {
-            return false;
-        }
 
-        if (File.Exists(folder + "\\profile.sav"))
-        {
-            return true;
-        }
+        return SaveUtils.GetSavePath(folder, "profile") != null;
 
-        string[] winFiles = Directory.GetFiles(folder, "container.*");
-        if (winFiles.Length > 0)
-        {
-            return true;
-        }
-        return false;
     }
 
     public void UpdateCharacters()
@@ -511,6 +472,16 @@ public class RemnantSave
             {
                 return folders[0];
             }
+        }
+        return saveFolder;
+    }
+
+    public static string GetSaveFolder()
+    {
+        string saveFolder = Properties.Settings.Default.SaveFolder;
+        if (saveFolder.EndsWith("\\wgs"))
+        {
+            saveFolder = SaveUtils.GetWgsFolderFromWgsBaseFolder(saveFolder)!;
         }
         return saveFolder;
     }

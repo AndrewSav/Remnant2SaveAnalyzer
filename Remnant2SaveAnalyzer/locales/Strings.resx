@@ -609,4 +609,16 @@
   <data name="chkShowNoLocation_Content" xml:space="preserve">
     <value>Show items not tied to a location</value>
   </data>
+  <data name="lblMissingItemColor_Content" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value />
+  </data>
+  <data name="chkDebugSavesLocation" xml:space="preserve">
+    <value>Debug saves location</value>
+  </data>
 </root>

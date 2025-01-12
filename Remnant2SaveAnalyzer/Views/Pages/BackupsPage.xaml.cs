@@ -37,8 +37,13 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
     {
         get
         {
-            RemnantSave activeSave = new(Properties.Settings.Default.SaveFolder,true);
-            DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
+            RemnantSave activeSave = new(RemnantSave.GetSaveFolder(), true);
+            if (!activeSave.Valid)
+            {
+                return false;
+
+            }
+            DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath!);
             foreach (SaveBackup backup in _listBackups)
             {
                 DateTime backupDate = backup.SaveDate;
@@ -400,7 +405,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
     private static bool BackupActive(SaveBackup saveBackup)
     {
         RemnantSave activeSave = new(Properties.Settings.Default.SaveFolder, true);
-        if (DateTime.Compare(saveBackup.SaveDate, File.GetLastWriteTime(activeSave.SaveProfilePath)) == 0)
+        if (activeSave.Valid && DateTime.Compare(saveBackup.SaveDate, File.GetLastWriteTime(activeSave.SaveProfilePath!)) == 0)
         {
             return true;
         }
@@ -417,8 +422,14 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
                 Notifications.Normal("Active save is not valid; backup skipped.");
                 return;
             }
+            if (Properties.Settings.Default.SaveFolder.EndsWith("\\wgs"))
+            {
+                Notifications.Warn("Microsoft game pass backups are not supported");
+                return;
+            }
+
             int existingSaveIndex = -1;
-            DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
+            DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath!);
             string backupFolder = $@"{Properties.Settings.Default.BackupFolder}\{saveDate.Ticks}";
             if (!Directory.Exists(backupFolder))
             {
@@ -436,6 +447,8 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
                 }
             }
             foreach (string file in Directory.GetFiles(Properties.Settings.Default.SaveFolder, "*.sav"))
+
+
             {
                 File.Copy(file, $@"{backupFolder}\{Path.GetFileName(file)}", true);
             }
@@ -483,6 +496,7 @@ public partial class BackupsPage : INavigableView<ViewModels.BackupsViewModel>
             }
         }
     }
+
     private void CheckBackupLimit()
     {
         if (_listBackups.Count > Properties.Settings.Default.BackupLimit && Properties.Settings.Default.BackupLimit > 0)
