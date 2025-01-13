@@ -1,6 +1,9 @@
 # Changelog
 
 
+## 0.0.34 (13 Jan 2025)
+- Fix Override Pin name and location
+
 ## 0.0.33 (12 Jan 2025)
 - Fix rare issue with Nimue Ribbon detection
 - Improved detection for Faelin/Faerin/One True King sigil
