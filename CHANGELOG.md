@@ -1,6 +1,9 @@
 # Changelog
 
 
+## 0.0.35 (13 Jan 2025)
+- Update analyser library
+
 ## 0.0.34 (13 Jan 2025)
 - Fix Override Pin name and location
 

@@ -341,6 +341,20 @@ public class RemnantSave
             }
             logger.Information($"END Quick slots, Character {index + 1} (save_{character.Index})");
 
+            // Thaen fruit
+            if (character.Save.ThaenFruit == null)
+            {
+                logger.Information("Thaen fruit data not found");
+            }
+            else
+            {
+                logger.Information("Thaen fruit data");
+                foreach (KeyValuePair<string, string> pair in character.Save.ThaenFruit.StringifiedRawData)
+                {
+                    logger.Information($"  {pair.Key}: {pair.Value}");
+                }
+            }
+
             // Campaign ------------------------------------------------------------
             logger.Information($"Save play time: {Utils.FormatPlaytime(character.Save.Playtime)}");
             foreach (Zone z in character.Save.Campaign.Zones)
@@ -352,6 +366,19 @@ public class RemnantSave
             string respawnPoint = character.Save.Campaign.RespawnPoint == null ? "Unknown" : character.Save.Campaign.RespawnPoint.ToString();
             logger.Information($"Campaign respawn point: {respawnPoint}");
 
+            // Blood Moon
+            if (character.Save.Campaign.BloodMoon == null)
+            {
+                logger.Information("Blood moon data not found");
+            }
+            else
+            {
+                logger.Information("Blood moon data");
+                foreach (KeyValuePair<string, string> pair in character.Save.Campaign.BloodMoon.StringifiedRawData)
+                {
+                    logger.Information($"  {pair.Key}: {pair.Value}");
+                }
+            }
 
             // Campaign Quest Inventory ------------------------------------------------------------
             logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: campaign");
@@ -377,6 +404,20 @@ public class RemnantSave
                 logger.Information($"Adventure play time: {Utils.FormatPlaytime(character.Save.Adventure.Playtime)}");
                 respawnPoint = character.Save.Adventure.RespawnPoint == null ? "Unknown" : character.Save.Adventure.RespawnPoint.ToString();
                 logger.Information($"Adventure respawn point: {respawnPoint}");
+
+                // Blood Moon
+                if (character.Save.Adventure.BloodMoon == null)
+                {
+                    logger.Information("Blood moon information not found");
+                }
+                else
+                {
+                    logger.Information("Blood moon data");
+                    foreach (KeyValuePair<string, string> pair in character.Save.Adventure.BloodMoon.StringifiedRawData)
+                    {
+                        logger.Information($"  {pair.Key}: {pair.Value}");
+                    }
+                }
 
                 // Adventure Quest Inventory ------------------------------------------------------------
                 logger.Information($"BEGIN Quest inventory, Character {index+1} (save_{character.Index}), mode: adventure");
