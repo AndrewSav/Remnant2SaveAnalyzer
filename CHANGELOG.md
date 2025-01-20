@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.0.36 (21 Jan 2025)
+- Fixed a crahs
 
 ## 0.0.35 (13 Jan 2025)
 - Update analyser library

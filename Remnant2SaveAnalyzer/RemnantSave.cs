@@ -260,9 +260,6 @@ public class RemnantSave
             logger.Information($"BEGIN Inventory, Character {index+1} (save_{character.Index})");
 
 
-            List<InventoryItem> debug = character.Profile.Inventory.Where(x => x.ProfileId == "/Game/Items/Common/Item_DragonHeartUpgrade.Item_DragonHeartUpgrade_C").ToList();
-
-
             List<IGrouping<string, InventoryItem>> itemTypes = [.. character.Profile.Inventory
                 .GroupBy(x => x.LootItem?.Type)
                 .OrderBy(x=> x.Key)];

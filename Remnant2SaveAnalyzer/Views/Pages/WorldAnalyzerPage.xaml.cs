@@ -783,7 +783,7 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
     private List<WorldAnalyzerGridData> AddLootGroup(LootGroup lg, string locationName, List<string> missingIds)
     {
         List<WorldAnalyzerGridData> result = [];
-        List<LootItem> items = lg.Items;
+        List<LootItemExtended> items = lg.Items;
         if (!Properties.Settings.Default.ShowCoopItems)
         {
             items = items.Where(x => !x.Properties.ContainsKey("Coop") || x.Properties["Coop"] != "True").ToList();
@@ -819,15 +819,16 @@ public partial class WorldAnalyzerPage : INavigableView<ViewModels.WorldAnalyzer
         return result;
     }
 
-    public class LocalisedLootItem : LootItem
+    public class LocalisedLootItem : LootItemExtended
     {
         private readonly WorldAnalyzerPage _parent;
         [SetsRequiredMembers]
-        public LocalisedLootItem(LootItem item, WorldAnalyzerPage parent)
+        public LocalisedLootItem(LootItemExtended item, WorldAnalyzerPage parent) : base(item)
         {
             IsLooted = item.IsLooted;
             IsPrerequisiteMissing = item.IsPrerequisiteMissing;
-            Properties = item.Properties;
+            IsVendoredAccountAward = item.IsVendoredAccountAward;
+            HasRequiredMaterial = item.HasRequiredMaterial;
             _parent = parent;
         }
 
