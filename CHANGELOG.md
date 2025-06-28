@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.37 (28 June 2025)
+- Add Wallace and account-unlocked archetypes that he offers
+
 ## 0.0.36 (21 Jan 2025)
 - Fixed a crahs
 
