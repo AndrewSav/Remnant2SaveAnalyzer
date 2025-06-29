@@ -2,9 +2,13 @@
 
 This is a fork of the excellent [Remnant Save Guardian](https://github.com/Razzmatazzz/RemnantSaveGuardian) originally created by Razzmatazz.
 
+## Archival Notice
+
+I forked Remnant Save Guardian because I needed a UI to test and debug my Remnant 2 Save parsing libraries (links are at the bottom of this page). Since then a different UI based on my library was created: [Remnant Overseer](https://github.com/Angelore/remnant-two-overseer). Because of this, this particular project outlived its usefulness, and thus I'm archiving it.
+
 ## Differences with Remnant Save Guardian
 
-- The underlying save parsing engine is completely different and allows for more fidelity in item detecton
+- The underlying save parsing engine is completely different and allows for more fidelity in item detection
 - Every single item showed by the program has a tooltip that describes how to find it
 - Hide Ward 13, Labyrinth and Root Earth, once you feel you know them by heart
 - Hide Tomes of Knowledge, once you are maxed out, you might not be that much interested in them
@@ -18,18 +22,13 @@ This is a fork of the excellent [Remnant Save Guardian](https://github.com/Razzm
 
 ## Potential improvements
 
-This is a list of things that are possible to add with the new engine, but which requrie some additional work
-
-- See items offered in Cass shop
-- Track objectives progression, e.g. kill x bosses
-- Show last respawn point for characters
-- Show loadouts / inventory / equipped items
+See <https://github.com/Angelore/remnant-two-overseer/issues>
 
 ## Known issues
 
-Most of these issues are unlikely to be fixed, unless someone would like to help:
+Since the project is archived, these issues are not planned to be fixed:
 
-- This program is a bit slower than RSG due to different parsing engine. On SSD the slowdown is noticable but IMO tolerable
+- This program is a bit slower than RSG due to different parsing engine. On SSD the slowdown is noticeable but IMO tolerable
 - Translations might not work as they used, and for the newer content there are none
 - [If you are using Norton Antivirus, it may cause weirdness with your game saves and RemnantSaveGuardian](https://github.com/Razzmatazzz/RemnantSaveGuardian/issues/70)
 
